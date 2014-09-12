@@ -1,9 +1,9 @@
 #############
 # A set of functions to analyzse a system of particles with isotropic interactions
-# Using two sets of algorithms, one for self consistent field theory and one for 
+# Using two sets of algorithms, one for self consistent field theory and one for
 #
 #
-#
+################################################################################
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -12,7 +12,17 @@ import math as m
 import time
 from decimal import *
 
-
+################################################################################
+# A set of functions to analyzse a system of particles with isotropic interactions
+# Using two sets of algorithms, one for self consistent field theory and one for
+#
+# Calculates the free energy for the DFT like algorithm(The free energy zero was
+# moved so it needs to be a different function)
+#
+# It still needs work, the potential needs to be somehow passed to this function
+# possible rework needed so that this code can be used in a object oriented like
+# structure
+################################################################################
 
 def FreeEnergyDFTLike(phiaFree, volumeFractionA):
 
@@ -33,10 +43,6 @@ def FreeEnergyDFTLike(phiaFree, volumeFractionA):
 
 def FreeEnergySCFT(phiaFree, volumeFractionA):
 
-
-
-
-
 def AlgoirithmSCFT2D(intialDensity,Height, Depth, Length, Width, volumeFraction = 0.5, alpha = 1, numberOfLatticePoints = 64, SizeOfBox = 15.0):
 
 	t1              = time.clock()
@@ -48,9 +54,9 @@ def AlgoirithmSCFT2D(intialDensity,Height, Depth, Length, Width, volumeFraction 
 	smallmix        = 0.0001
 	bigmix          = 0.1
 	mixParameter    = smallmix
-	incompresiblity = 100/alphaA        # Defines the stregnth of the global energy penalty 
+	incompresiblity = 100/alphaA        # Defines the stregnth of the global energy penalty
 	number_of_iterations 			= 100000	# Default 30000
-	tolerence 						= 10**(-4) 	# the tolerance 
+	tolerence 						= 10**(-4) 	# the tolerance
 
 	xsize							= SizeOfBox
 	ysize							= SizeOfBox
@@ -146,7 +152,7 @@ def AlgoirithmSCFT2D(intialDensity,Height, Depth, Length, Width, volumeFraction 
 			phibnew = phibtemp+phibave;
 
 			    #print phia
-			#print(g, devtot[0], perdev)   
+			#print(g, devtot[0], perdev)
 			phia = smallmix[b]*phianew+(1- smallmix[b])*phia;
 			phib = smallmix[b]*phibnew+(1- smallmix[b])*phib;
 
@@ -168,9 +174,6 @@ def AlgoirithmSCFT2D(intialDensity,Height, Depth, Length, Width, volumeFraction 
 	else:
 		return np.zeros((64,64)), xxs, yys, flag
 
-
-
-
 def AlgorithmDFTLike2D(intialDensity,Height, Depth, Length, Width, volumeFraction = 0.5, alpha = 1, numberOfLatticePoints = 64, SizeOfBox = 15.0):
 
 	t1              = time.clock()
@@ -182,9 +185,9 @@ def AlgorithmDFTLike2D(intialDensity,Height, Depth, Length, Width, volumeFractio
 	smallmix        = 0.01
 	bigmix          = 0.1
 	mixParameter    = smallmix
-	incompresiblity = 100/alphaA        # Defines the stregnth of the global energy penalty 
+	incompresiblity = 100/alphaA        # Defines the stregnth of the global energy penalty
 	number_of_iterations 			= 100000	# Default 30000
-	tolerence 						= 10**(-4) 	# the tolerance 
+	tolerence 						= 10**(-4) 	# the tolerance
 
 	xsize							= SizeOfBox
 	ysize							= SizeOfBox
@@ -193,7 +196,7 @@ def AlgorithmDFTLike2D(intialDensity,Height, Depth, Length, Width, volumeFractio
 	number_of_lattice_pointsY 		= numberOfLatticePoints
 	half_number_of_lattice_pointsX 	= numberOfLatticePoints/2 # the halfway point in the lattice
 	half_number_of_lattice_pointsY  = numberOfLatticePoints/2
-	
+
 	dx 								= xsize/float(number_of_lattice_pointsX)
 	dy                              = ysize/float(number_of_lattice_pointsY)
 	xxs 							= [i*dx - xsize/2.0 for i in range(0,number_of_lattice_pointsX)]
@@ -201,7 +204,7 @@ def AlgorithmDFTLike2D(intialDensity,Height, Depth, Length, Width, volumeFractio
 
 
 	PotentialAB = np.zeros((number_of_lattice_pointsX, number_of_lattice_pointsY))
-	
+
 	A1 = Height
 	A2 = Depth
 	length = Length
@@ -233,14 +236,14 @@ def AlgorithmDFTLike2D(intialDensity,Height, Depth, Length, Width, volumeFractio
 
 	phia = np.loadtxt('dots.txt')
 
-	
-	
+
+
 
 	phia[phia >= 1.0]  = 0.9999999
 	phia[phia <= 0.0]  = 0.0000001
 
 
-	
+
 	divergence          = []
 	step                = []
 	percentDeviation    = []
@@ -250,7 +253,7 @@ def AlgorithmDFTLike2D(intialDensity,Height, Depth, Length, Width, volumeFractio
 	flag = 0
 
 	for j in xrange(number_of_iterations):
-		phia2 = phia - volumeFractionA 
+		phia2 = phia - volumeFractionA
 		iphia       = np.fft.rfft2(phia2)
 
 		lgaterm     = -(1/alphaA)*np.log(phia/volumeFractionA)
@@ -285,11 +288,11 @@ def AlgorithmDFTLike2D(intialDensity,Height, Depth, Length, Width, volumeFractio
 		if (perdev < perc and count > 1000):
 		    mixParameter = bigmix        # Try a big step
 		    count   = 0
-		else: 
+		else:
 		    mixParameter = smallmix      # Stick with small step.
 		    count   = count+1
 		    #print phia
-		#print(g, devtot[0], perdev)   
+		#print(g, devtot[0], perdev)
 		step.append(g)
 		divergence.append(devtot[0])
 		g= g +1
@@ -313,7 +316,3 @@ def AlgorithmDFTLike2D(intialDensity,Height, Depth, Length, Width, volumeFractio
 		return phia, xxs, yys, flag
 	else:
 		return phia, xxs ,yys, flag
-
-
-
-

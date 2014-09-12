@@ -1,0 +1,7 @@
+recursive-include doc CREDITS.txt LICENSE.txt NEWS.txt README.txt TODO.txt
+recursive-include doc test_vtk.py vtk_doc.py *.html *.jpg 
+recursive-include examples custom16.lut heart.mv heart.vtk
+include mayavi MANIFEST.in
+recursive-include vtkPipeline/Icons *.gif
+recursive-include vtkPipeline NEWS.txt README.txt
+recursive-include luts *.lut *.jpg README.txt

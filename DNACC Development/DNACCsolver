@@ -1,0 +1,28 @@
+
+
+#------------------------------------------------------------
+# This code is indending to address the asymetry of the solution
+# with the colloids through the use of a psudo asymptotic preserving
+# method. It now adds a large step when possible to speed up convergence
+#
+# 
+# Author: Shawn Dion 
+# Date: Feb 13, 2014
+#
+# 
+#------------------------------------------------------------
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+import scipy as sci
+import math as m
+import time
+from decimal import *
+
+#------------------------------------------------------------
+# Initialize the Variables
+#------------------------------------------------------------
+
+def DNACCsolver():
+    

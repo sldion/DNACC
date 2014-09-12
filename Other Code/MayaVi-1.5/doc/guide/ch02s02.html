@@ -1,0 +1,126 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Command line arguments</title><meta name="generator" content="DocBook XSL Stylesheets V1.68.1"><link rel="start" href="index.html" title="MayaVi Users Guide"><link rel="up" href="ch02.html" title="Chapter 2. Getting started"><link rel="prev" href="ch02.html" title="Chapter 2. Getting started"><link rel="next" href="ch02s03.html" title="The MayaVi Window"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Command line arguments</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch02.html">Prev</a> </td><th width="60%" align="center">Chapter 2. Getting started</th><td width="20%" align="right"> <a accesskey="n" href="ch02s03.html">Next</a></td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="command-line-options"></a>Command line arguments</h2></div></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="basic-options"></a>Basic options</h3></div></div></div><p>
+This section lists some simple useful command line options
+</p><div class="variablelist"><dl><dt><span class="term"><strong class="userinput"><code><span><strong class="command">mayavi</strong></span> 
+<code class="option">--display DISPLAY</code> 
+</code></strong>
+</span></dt><dd><p>Use DISPLAY for the X display.  This option makes
+sense only when running MayaVi under X. </p></dd><dt><span class="term"><strong class="userinput"><code><span><strong class="command">mayavi</strong></span> 
+<code class="option">-g WIDTHxHEIGHT+XOFF+YOFF </code> 
+</code></strong>
+</span></dt><dd><p>Set the geometry of the main window when it is
+launched.  The arguments that can be passed follow the standard X
+convention and include the width, height, x offset and y offset of the
+window.  This option is also available through
+<strong class="userinput"><code><code class="option">--geometry</code></code></strong>.
+</p></dd><dt><span class="term"><strong class="userinput"><code><span><strong class="command">mayavi</strong></span> 
+<code class="option">-h </code> 
+</code></strong>
+</span></dt><dd><p>This prints all the available command line options and
+exits.  Also available through
+<strong class="userinput"><code><code class="option">--help</code></code></strong>. </p></dd><dt><span class="term"><strong class="userinput"><code><span><strong class="command">mayavi</strong></span> 
+<code class="option">-V </code> 
+</code></strong>
+</span></dt><dd><p>This prints the MayaVi version on the command
+line and exits.  Also available through <strong class="userinput"><code> <code class="option"> --version
+</code> </code></strong>. </p></dd><dt><span class="term"><strong class="userinput"><code><span><strong class="command">mayavi</strong></span> 
+<code class="option">filename.mv </code> 
+</code></strong>
+</span></dt><dd><p> This loads a previously saved MayaVi visualization.
+</p></dd></dl></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="advanced-options"></a>Advanced options</h3></div></div></div><p>
+This section lists some advanced command line options.  This section
+is intended for those who already understand how MayaVi works.  If you
+are new to MayaVi it is recommended that you read the rest of the
+guide and then get back here when you need more advanced command line
+options.
+</p><div class="variablelist"><dl><dt><span class="term"><strong class="userinput"><code><span><strong class="command">mayavi</strong></span> 
+<code class="option">-d vtk_file.vtk</code> 
+</code></strong>
+</span></dt><dd><p>Opens a VTK file (even the new XML format is supported)
+passed as the argument.  Also available through
+<strong class="userinput"><code><code class="option">--vtk </code></code></strong>.  </p></dd><dt><span class="term"><strong class="userinput"><code><span><strong class="command">mayavi</strong></span> 
+<code class="option">-x plot3d_xyz_file </code> 
+</code></strong>
+</span></dt><dd><p>This opens a PLOT3D co-ordinate file passed as the
+argument.  Also available through <strong class="userinput"><code> <code class="option">
+--plot3d-xyz </code> </code></strong>. </p></dd><dt><span class="term"><strong class="userinput"><code><span><strong class="command">mayavi</strong></span> 
+<code class="option">-q plot3d_q_file </code> 
+</code></strong>
+</span></dt><dd><p>This opens a PLOT3D solution file passed as the
+argument.  Please note that this option must <span class="emphasis"><em> always
+</em></span> follow a -q or --plot3d-xyz option.  Also available
+through <strong class="userinput"><code> <code class="option"> --plot3d-q </code> </code></strong>.
+</p></dd><dt><span class="term"><strong class="userinput"><code><span><strong class="command">mayavi</strong></span> 
+<code class="option">-e ensight_case_file</code> 
+</code></strong>
+</span></dt><dd><p>Opens an EnSight case file passed as the argument.  Also
+available through <strong class="userinput"><code><code class="option">--ensight </code></code></strong>.
+</p></dd><dt><span class="term"><strong class="userinput"><code><span><strong class="command">mayavi</strong></span> 
+<code class="option">-m module-name </code> 
+</code></strong>
+</span></dt><dd><p>The passed module name is loaded in the current
+ModuleManager.  The module name must be a valid one if not you will
+get an error message. Also available through <strong class="userinput"><code> <code class="option">
+--module </code> </code></strong>. </p></dd><dt><span class="term"><strong class="userinput"><code><span><strong class="command">mayavi</strong></span> 
+<code class="option">-f filter-name </code> 
+</code></strong>
+</span></dt><dd><p>The passed filter name is loaded in the current
+ModuleManager.  The filter name must be a valid one if not you will
+get an error message. Also available through <strong class="userinput"><code> <code class="option">
+--filter </code> </code></strong>.  If the filter is the
+<strong class="userinput"><code>UserDefined</code></strong> filter then it could be specified
+as <strong class="userinput"><code>UserDefined:vtkSomeFilter</code></strong> where
+<strong class="userinput"><code>vtkSomeFilter</code></strong> is a valid VTK class.  In this
+case the filter will not prompt you for the VTK filter to
+use.</p></dd><dt><span class="term"><strong class="userinput"><code><span><strong class="command">mayavi</strong></span> 
+<code class="option">-z saved-visualization-file </code> 
+</code></strong>
+</span></dt><dd><p>Loads a previously saved MayaVi visualization file
+passed as the argument.  Also available through <strong class="userinput"><code> <code class="option">
+--viz </code> </code></strong> and <strong class="userinput"><code> <code class="option"> --visualization
+</code> </code></strong>.
+</p></dd><dt><span class="term"><strong class="userinput"><code><span><strong class="command">mayavi</strong></span> 
+<code class="option">-M module-manager-file </code> 
+</code></strong>
+</span></dt><dd><p>Loads a module manager saved to a file.  If a file
+that does not exist is given this will simply create a new module
+manager that can be populated with filters and modules.  Also
+available through <strong class="userinput"><code> <code class="option"> --module-mgr </code>
+</code></strong>. </p></dd><dt><span class="term"><strong class="userinput"><code><span><strong class="command">mayavi</strong></span> 
+<code class="option">-w vrml2-file </code> 
+</code></strong>
+</span></dt><dd><p>Imports a VRML2 scene given an appropriate file.  Also
+available through <strong class="userinput"><code> <code class="option"> --vrml </code> </code></strong>.
+</p></dd><dt><span class="term"><strong class="userinput"><code><span><strong class="command">mayavi</strong></span> 
+<code class="option">-3 3DStudio-file </code> 
+</code></strong>
+</span></dt><dd><p>Imports a 3D Studio scene given an appropriate file.
+Also available through <strong class="userinput"><code> <code class="option"> --3ds </code>
+</code></strong>. </p></dd><dt><span class="term"><strong class="userinput"><code><span><strong class="command">mayavi</strong></span> 
+<code class="option">-n </code> 
+</code></strong>
+</span></dt><dd><p>Creates a new window.  Any options passed after this
+will apply to this newly created window.  Also available through
+<strong class="userinput"><code> <code class="option"> --new-window </code> </code></strong>.
+</p></dd></dl></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="cmd-examples"></a>Examples</h3></div></div></div><p> Here are a few interesting examples.</p><pre class="screen">
+<code class="prompt">%</code> <span><strong class="command">mayavi examples/heart.mv</strong></span>
+</pre><p> This command loads an existing visualization.</p><pre class="screen">
+<code class="prompt">%</code> <span><strong class="command">mayavi -z examples/heart.mv -n -z examples/other.mv</strong></span>
+</pre><p> This command loads the <code class="filename">heart.mv</code> saved
+visualization in one window, creates a new window and loads the
+<code class="filename">other.mv</code> in the other.</p><pre class="screen">
+<code class="prompt">%</code> <span><strong class="command">mayavi -d examples/heart.vtk -m Axes -m GridPlane \ </strong></span>
+<code class="prompt">&gt;</code> <span><strong class="command"> -M new -f Threshold -m IsoSurface \ </strong></span>
+<code class="prompt">&gt;</code> <span><strong class="command"> -n -d examples/heart.vtk -m Outline -m ContourGridPlane </strong></span>
+</pre><p> This command loads a VTK data file called
+<code class="filename">heart.vtk</code>, loads the <code class="classname">Axes</code>,
+<code class="classname">GridPlane</code> modules in one
+<code class="classname">ModuleManager</code>.  Then creates a new
+<code class="classname">ModuleManager</code> and loads a
+<code class="classname">Threshold</code> filter and an
+<code class="classname">IsoSurface</code> module in it.  It then opens a new
+visualization window, loads the VTK data file,
+<code class="filename">heart.vtk</code>, the modules
+<code class="classname">Outline</code> and
+<code class="classname">ContourGridPlane</code> in it.
+</p><p> The provided options make it possible to construct very useful
+visualizations from the command line. </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch02.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch02.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch02s03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 2. Getting started </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> The MayaVi Window</td></tr></table></div></body></html>

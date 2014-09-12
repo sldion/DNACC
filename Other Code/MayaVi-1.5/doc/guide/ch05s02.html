@@ -1,0 +1,145 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Extending MayaVi</title><meta name="generator" content="DocBook XSL Stylesheets V1.68.1"><link rel="start" href="index.html" title="MayaVi Users Guide"><link rel="up" href="ch05.html" title="Chapter 5. Information for Developers"><link rel="prev" href="ch05.html" title="Chapter 5. Information for Developers"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Extending MayaVi</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch05.html">Prev</a> </td><th width="60%" align="center">Chapter 5. Information for Developers</th><td width="20%" align="right"> </td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="extending"></a>Extending MayaVi</h2></div></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="user-modules"></a>User defined sources, modules and  filters</h3></div></div></div><p>
+The easiest way to extend MayaVi is to create a directory that
+contains three sub-directories called <code class="filename"> Sources/ </code>,  <code class="filename"> Modules/ </code> and a <code class="filename"> Filters/ </code> directory inside
+where user defined sources, modules and filters can be stored.  You
+don't need to create an <code class="filename">__init__.py</code> file in these
+directories.  This directory should then be added to the MayaVi
+"search path" which may be set by using the
+<span class="guimenuitem">Options/Preferences</span> menu.  The search path
+is a ':'-separated string and is specified like the PYTHONPATH.  '~',
+'~user' and '$VAR' are all expanded.  Note that after changing the
+search path you'll have to restart MayaVi.
+</p><p> These user defined modules and filters will be made available
+inside the <span class="guimenuitem">User</span> sub-menu of the
+<span class="guimenuitem">File/Open</span>,
+<span class="guimenuitem">Module</span> and
+<span class="guimenuitem">Filter</span> menus respectively.  These sources,
+modules and filters can be used from the command line or from a Python
+interpreter session by using 'User.SourceName' (sources cannot be
+specified from the command line but may be specified in a Python
+script), 'User.ModuleName' or 'User.FilterName'.  When creating user
+defined sources or modules or filters make sure that the name of the
+module is the same as the name of the class that defines the
+particular object.
+</p><p>
+It is likely that the first thing you will do to test out this
+functionality is to copy a standard source, module or filter into your
+directory, rename it and test with it.  Beware of some of the
+following points before you do that.
+</p><div class="orderedlist"><ol type="1"><li><p>
+Make certain that the name of the class that defines the
+source/module/filter is identical with the name of the module that
+contains it.  So if you have a module called
+<code class="filename">MySuperModule.py</code> the class that defines the module
+<span class="emphasis"><em>must</em></span> be called <code class="classname">MySuperModule</code>.
+The same applies to the sources and filters as well.
+</p></li><li><p>
+The standard Modules/filters and sources are a little special and will
+typically contain code that looks like this.
+</p><pre class="programlisting">
+import Base.Objects, Common
+# ...
+class SomeModule(Base.Objects.Module):
+# ...
+</pre><p>
+This must be changed to the following.
+</p><pre class="programlisting">
+from mayavi import Common
+from mayavi.Base import Objects
+# ...
+class SomeModule(Objects.Module):
+# ...
+</pre><p> Essentially, the Python module defining your object should be
+"import-able" from the Python interpreter even without MayaVi running.
+</p></li></ol></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="misc-devel-info"></a>General guidelines and information</h3></div></div></div><p>
+This section lists a set of things that developers should know before
+extending MayaVi by implementing new <code class="classname">Module</code>s,
+<code class="classname">Source</code>s and <code class="classname">Filter</code>s.
+</p><div class="orderedlist"><div class="orderedlist"><ol type="a"><li><p>
+The <code class="function">print_err</code> function takes a string and prints
+it out on a GUI message box.
+</p></li><li><p>
+The <code class="function">get_relative_file_name(base_f_name,
+f_name)</code> function returns a file name for the given
+<code class="function">f_name</code> relative to the
+<code class="function">base_f_name</code>.  This is useful when one
+stores file names in the configuration.
+</p></li><li><p>
+The <code class="function">get_abs_file_name(base_f_name,
+rel_f_name)</code> function returns an absolute file name
+given a base file name and another file name relative to the base
+name.  This is useful to load a stored file name.
+</p></li><li><p>
+The <code class="function">debug</code> function prints a string on the debug
+window and on <code class="function">sys.stdout</code>.  This is used to print
+debug messages in all the MayaVi code.
+</p></li><li><p>
+The <code class="function">config</code> variable is an instance of class that
+contains the configuration preferences of the user.  This is used to
+initialize default colors etc.
+</p></li><li><p>
+The <code class="function">state</code> variable is instance of the
+<code class="classname">AppState</code> class.  The
+<code class="function">state.busy()</code>
+<code class="function">state.idle()</code> members are used to
+change the state of the MayaVi application.
+</p></li></ol></div><ol type="1"><li><p>
+As with any code the best way to learn how the classes and functions
+are organized and work is to look through the source.  What follows
+are a few hints that might be useful when you develop code for
+MayaVi.
+</p></li><li><p>
+Before writing a new component please look at the the
+<code class="classname">Module</code>, <code class="classname">Filter</code> and
+<code class="classname">Source</code> classes defined in
+<code class="filename">Base/Objects.py</code>.  Also look at their parent
+classes.  A lot of useful functionality is provided there and reading
+this may prevent unnecessary code replication.
+</p></li><li><p>
+The Module and Filter menus are created dynamically from the files in
+the <code class="filename">Modules</code> and <code class="filename">Filters</code> directories.  All the files there
+except the <code class="filename">__init__.py</code> <span class="emphasis"><em>will</em></span>
+be recognized as modules or filters respectively.  So do not put any
+files there that are neither modules nor filters.
+</p></li><li><p>
+Make sure the name of the new Module/Filter or Source subclass and the
+name of the file that defines the Module subclass are the same.  For
+instance the <code class="classname">Axes</code> module is defined in a file
+called <code class="filename">Axes.py</code>.
+</p></li><li><p>
+As far as possible try to follow my style of coding.  The naming
+convention that I have followed is to name all VTK like methods in the
+usual VTK way (like GetOutput).  All other methods are named like so
+get_vtk_object.  This has been done to differentiate between the two.
+All class names have the first letter of each word capitalized for
+example as in <code class="classname">VtkDataReader</code> and
+<code class="classname">ExtractVectorComponents</code>.
+</p></li><li><p>
+Please try to document your classes and functions.
+</p></li><li><p>
+While writing any component please try to make the particular
+component "import safe" by not doing either of the first two and using
+the last way of importing modules.  Doing this makes it possible to
+reload modules on the fly.
+</p><pre class="programlisting">
+# Don't do this:
+from SomeThing import *
+# or the following:
+from SomeThing import SomeClass
+# Use this instead.
+import SomeThing
+</pre></li><li><p>
+While developing a component it is possible to test the component by
+running MayaVi and then retest it by reloading the modules from the
+<span class="guimenu">Options</span>.
+</p></li><li><p>
+The <code class="filename">Common.py</code> module provides a few useful
+classes and functions.  Some of them are as follows:
+</p></li><li><p>
+Every component has to be able to save its state to an ASCII file and
+be able to reload its state from the saved file.  The
+<code class="function">save_config</code> and <code class="function">load_config</code>
+functions should implement this.  This should be tested properly.
+</p></li></ol></div><p>
+Happy hacking!
+</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch05.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch05.html">Up</a></td><td width="40%" align="right"> </td></tr><tr><td width="40%" align="left" valign="top">Chapter 5. Information for Developers </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

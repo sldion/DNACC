@@ -1,0 +1,73 @@
+The major contributors are mentioned in the __credits__ of each source
+file and practically all contributions (including bug reports) should
+be mentioned in the CVS logs.
+
+
+Contributors:
+
+  + Gerard Gorman -- initial version of the Volume Module along with
+    the Tkinter based color transfer function editor.  Initial patch
+    for time series support.
+
+  + Gerald Knizia and Arnd Baecker -- Contributed a full-featured
+    GradientEditor module to create new LUTs.  Also fixed the RIB
+    output so it renders nicely.
+
+  + Gareth Clay -- Contributed the Vorticity filter.
+
+  + Jose Paulo Moitinho de Almeida -- initial implementation of tensor
+    support, tensor related filters and modules, initial
+    implementation of picking code.  Ideas and feedback.
+
+  + Raymond C. Maple -- Contributed the Light manipulation toolkit
+    (Lights.py).
+
+  + Fernando Perez -- Initial patch to support user defined modules
+    and filters that may be placed anywhere in the search path.  Also
+    provided several important bug reports and suggestions.
+
+  + Ross Harder -- Support for user defined sources.
+
+  + Philip Rubini -- ideas and code on the auto-sweeping of sliders,
+    VRML scene importing, GUI related improvements and valuable
+    feedback on VTK-CFD (MayaVi's predecessor).
+
+  + Pearu Peterson -- bug reports, suggestions, help and assistance
+    with using distutils.
+
+  + Jean M. Favre and David Garcia -- provided a module that used a
+    vtkExtractUnstructuredGrid and encouraged me to write a filter for
+    it.
+
+  + Matiland Bottoms -- Debian package maintainer for MayaVi and VTK.
+
+  + Jeremy Gill for a patch to enable OOGL export.
+
+  + Richard Boardman for wavefront export support.
+
+
+Suggestions and feedback:
+
+  + Massimiliano Fatica -- ideas on providing rudimentary multi-block
+    support for PLOT3D data.
+
+
+Many thanks to Sourceforge.net for graciously hosting the MayaVi site,
+CVS repository etc.  Thanks to my friend Vikram Vijayaraghavan for
+hosting the VTK and MayaVi binaries at his site.
+
+
+Many thanks to all those who patiently sent their suggestions, bug
+reports, bug fixes and code.
+
+I'd specially like to thank my parents and also my advisors
+Prof. S.C. Rajan and Prof. M. Ramakrishna for their support.  I'd also
+like to thank the Department of Aerospace Engineering, IIT-Madras for
+support.
+
+
+My sincere apologies if I left out someone.  If you have helped in any
+way with this project please accept my heartfelt thanks!
+
+
+Prabhu Ramachandran <prabhu_r@users.sf.net>

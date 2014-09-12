@@ -1,0 +1,33 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Data formats</title><meta name="generator" content="DocBook XSL Stylesheets V1.68.1"><link rel="start" href="index.html" title="MayaVi Users Guide"><link rel="up" href="ch03.html" title="Chapter 3. Using MayaVi"><link rel="prev" href="ch03.html" title="Chapter 3. Using MayaVi"><link rel="next" href="ch03s03.html" title="Opening a data file"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Data formats</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03.html">Prev</a> </td><th width="60%" align="center">Chapter 3. Using MayaVi</th><td width="20%" align="right"> <a accesskey="n" href="ch03s03.html">Next</a></td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="data"></a>Data formats</h2></div></div></div><p>
+MayaVi is a data visualizer and one first needs to have data to
+visualize anything.  MayaVi supports the following data formats:
+</p><div class="glosslist"><dl><dt>
+<a href="http://www.vtk.org/pdf/file-formats.pdf" target="_top">
+VTK data format</a>
+</dt><dd><p> MayaVi supports <span class="emphasis"><em>any</em></span> VTK dataset using the
+<a href="http://www.vtk.org/pdf/file-formats.pdf" target="_top"> VTK data
+format</a>.  This includes rectilinear, structured and
+unstructured grid data and also polygonal data.  Please refer the
+linked document for details on the VTK data format.  The new VTK XML
+data format is also supported by MayaVi.
+</p></dd><dt>PLOT3D data</dt><dd><p> MayaVi supports PLOT3D file format with binary structured grid
+data.  The other PLOT3D datasets will not work due to limitations in
+VTK's vtkPLOT3DReader.  Simple support for multi-block data is also
+incorporated.
+</p></dd><dt>EnSight data</dt><dd><p> MayaVi supports EnSight data.  EnSight6 and EnSightGold formats
+are supported.  Only single parts are supported at this time.
+</p></dd></dl></div><p>
+In addition to this MayaVi allows one to import VRML2 files and 3D
+Studio files.  Texturing is not yet supported due to limitations in
+VTK's vtkVRMLImporter.
+</p><p>
+Those interested in converting data arrays under Python into VTK files
+should look at Pearu Peterson's <a href="http://cens.ioc.ee/projects/pyvtk/" target="_top">pyVTK</a> Python module.
+</p><p>
+MayaVi ships with a simple example of a heart CT scan data in the VTK
+data format (this should be in the <code class="filename">examples/</code> directory).  The dataset used is
+a structured points dataset with a scalar field.  This can be used as
+a simple reference.  More VTK, PLOT3D and EnSight data samples should
+be available from the <a href="http://www.vtk.org/get-software.php" target="_top">VTK download
+page</a>.
+</p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch03s03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 3. Using MayaVi </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Opening a data file</td></tr></table></div></body></html>

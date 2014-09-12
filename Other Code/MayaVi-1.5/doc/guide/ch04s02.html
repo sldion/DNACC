@@ -1,0 +1,139 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Useful Python Modules</title><meta name="generator" content="DocBook XSL Stylesheets V1.68.1"><link rel="start" href="index.html" title="MayaVi Users Guide"><link rel="up" href="ch04.html" title="Chapter 4. Using MayaVi from Python"><link rel="prev" href="ch04.html" title="Chapter 4. Using MayaVi from Python"><link rel="next" href="ch05.html" title="Chapter 5. Information for Developers"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Useful Python Modules</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch04.html">Prev</a> </td><th width="60%" align="center">Chapter 4. Using MayaVi from Python</th><td width="20%" align="right"> <a accesskey="n" href="ch05.html">Next</a></td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="util-modules"></a>Useful Python Modules</h2></div></div></div><p>
+
+This section describes some other useful modules that are released as
+part of MayaVi but are not necessarily part of the core MayaVi
+module/application.  The module <code class="classname">ivtk</code> is
+described in the next section.  The MayaVi package also contains a
+sub-package called <code class="classname">tools</code>.  This directory
+contains miscellaneous but useful tools that use or are related to
+MayaVi.  This is described subsequently.
+
+</p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="ivtk"></a>The Interactive VTK module</h3></div></div></div><p>
+It is very nice to be able to use and experiment with VTK from the
+Python interpreter.  In order to make this easier I've written a
+simple module that uses some of the MayaVi classes.  This makes using
+VTK from Python very pleasant.  The module is called
+<code class="classname">ivtk</code> which stands for interactive VTK.
+<code class="classname">ivtk</code> provides the following features.
+</p><div class="itemizedlist"><ul type="disc"><li><p> An easy to use VTK actor viewer that has menus to save the
+    scene, change background, show a help browser, show a pipeline
+    browser etc.
+    </p></li><li><p> A simple class documentation search tool/browser that lets
+    you search for arbitrary strings in the VTK class documentation
+    and lets you browse the VTK class documentation.
+    </p></li><li><p> An easy to use GUI to configure VTK objects using the
+    <code class="classname">vtkPipeline.ConfigVtkObj</code> module.
+    </p></li><li><p> An integrated picker that can be activated by pressing the
+    <span><strong class="keycap">p</strong></span> or <span><strong class="keycap">P</strong></span> keys.  This picker
+    functions the same way as the <a href="ch03s05.html" title="Picking data">MayaVi
+    picker</a>.
+    </p></li><li><p> An integrated light configuration kit that can be activated
+    by pressing the <span><strong class="keycap">l</strong></span> or <span><strong class="keycap">L</strong></span> keys.
+    This light configuration functions the same way as the <a href="ch03s06.html" title="Configuring the lights">MayaVi light kit</a>.
+    </p></li></ul></div><p>
+  The help browser allows one to search for arbitrary strings in the
+  VTK class documentation.  'and' and 'or' keywords are supported and
+  this makes searching for specific things easier.  If a search is
+  successful a list of matching classes is returned.  Clicking on a
+  class will pop up a window with the particular class documentation.
+  It is also possible to search for a particular class name.  All
+  classes matching the searched name will be shown.  The searching is
+  case insensitive.
+</p><p>
+  Here is a sample session that illustrates how
+  <code class="classname">ivtk</code> can be used.  A simple cone
+  example is shown.
+</p><pre class="programlisting">
+&gt;&gt;&gt; from mayavi import ivtk
+&gt;&gt;&gt; from vtk import *
+&gt;&gt;&gt; c = vtkConeSource()
+&gt;&gt;&gt; m = vtkPolyDataMapper()
+&gt;&gt;&gt; m.SetInput(c.GetOutput())
+&gt;&gt;&gt; a = vtkActor()
+&gt;&gt;&gt; a.SetMapper(m)
+&gt;&gt;&gt; v = ivtk.create_viewer() # or ivtk.viewer()
+# this creates the easy to use render window that can be used from
+# the interpreter.  It has several useful menus.
+
+&gt;&gt;&gt; v.AddActors(a)    # add actor(s) to viewer
+&gt;&gt;&gt; v.config(c)       # pops up a GUI configuration for object.
+&gt;&gt;&gt; v.doc(c)          # pops up class documentation for object.
+&gt;&gt;&gt; v.help_browser()  # pops up a help browser where you can search!
+&gt;&gt;&gt; v.RemoveActors(a) # remove actor(s) from viewer.
+</pre><p>
+The <code class="function">AddActors/RemoveActors</code> method can be passed a
+list/tuple or a single actor.  All of the passed actors will be
+added/removed to the <code class="classname"> vtkRenderWindow </code>.  The
+<code class="function">config</code> method provides an easy to use GUI to
+configure the passed VTK object.  The viewer also provides menus to
+save the rendered scene and also provides a menu to open a VTK
+Pipeline browser that can be used to browse the VTK pipeline and
+configure objects in it.
+</p><p>
+Even without creating the actor viewer it is possible to use the help
+browser and the configure code as shown below.
+</p><pre class="programlisting">
+&gt;&gt;&gt; from mayavi import ivtk
+&gt;&gt;&gt; d = ivtk.doc_browser()
+# pops up a standalone searcheable VTK class help browser.
+&gt;&gt;&gt; from vtk import *
+&gt;&gt;&gt; c = vtkConeSource()
+&gt;&gt;&gt; ivtk.doc(c)            # pops up class documentation for c
+&gt;&gt;&gt; ivtk.doc('vtkObject')  # class documentation for vtkObject.
+&gt;&gt;&gt; ivtk.config(c)         # configure object with GUI.
+</pre><p>
+  The module is fairly well documented and one should look at
+  the module for more information.  However, the above information
+  should suffice if one wants to start using the module.
+</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="tools"></a>The MayaVi <code class="classname">tools</code> sub-package</h3></div></div></div><p>
+MayaVi has a <code class="classname">tools</code> sub-package that contains
+useful modules that use or are related to MayaVi.  The following
+modules are present currently.
+</p><div class="sect3" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="imv"></a>The <code class="classname">imv</code> package</h4></div></div></div><p>
+The <code class="classname">imv</code> module provides Matlab-like one liners
+that make it easy to visualize data from the Python interpreter.  It
+currently provides three useful functions.  These are partially
+described below.  A simple example is also provided below that.  The
+<code class="classname">imv</code> module is well documented so please read
+the documentation strings in the module for more details.
+</p><div class="variablelist"><dl><dt><span class="term"><code class="function">surf(x, y, f)</code></span></dt><dd><p>
+This samples the function or 2D array <em class="parameter"><code>f</code></em> along
+<em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em> and plots a 3D
+surface.
+</p></dd><dt><span class="term"><code class="function">view(arr)</code></span></dt><dd><p>
+Views 2D arrays as a structured points dataset.  The view is set to
+the way we usually think of matrices with (0,0) at the top left of the
+screen.
+</p></dd><dt><span class="term"><code class="function">viewi(arr)</code></span></dt><dd><p>
+Views 2D arrays as a structured points dataset.  The data is viewed as
+an image.  This function is meant to be used with large arrays.  For
+smaller arrays one should use the more powerful
+<code class="function">view()</code> function. The implementation of this
+function is a bit of a hack and many of MayaVi's features cannot be
+used.  For instance you cannot change the lookup table color and
+expect the color of the image to change.
+</p></dd><dt><span class="term"><code class="function">sampler(xa, ya, func)</code></span></dt><dd><p>
+Samples a function (<code class="function">func</code>) at an array of ordered
+points (with equal spacing) and returns an array of scalars as per
+VTK's requirements for a structured points data set, i.e. x varying
+fastest and y varying next.
+</p></dd></dl></div><p> Here is a simple example of what can be done with the
+<code class="classname">imv</code> module.
+</p><pre class="programlisting">
+&gt;&gt;&gt; from Numeric import *
+&gt;&gt;&gt; from mayavi.tools import imv
+
+&gt;&gt;&gt; # surf example.
+&gt;&gt;&gt; def f(x, y):
+...   return sin(x*y)/(x*y)
+&gt;&gt;&gt; x = arange(-5., 5.05, 0.05)
+&gt;&gt;&gt; y = arange(-5., 5.05, 0.05)
+&gt;&gt;&gt; v = imv.surf(x, y, f)
+
+&gt;&gt;&gt; # view/viewi example.
+&gt;&gt;&gt; z1 = fromfunction(lambda i,j:i+j, (128,256))
+&gt;&gt;&gt; v1 = imv.view(z1)
+
+&gt;&gt;&gt; z2 = fromfunction(lambda i,j:i+j, (512, 512))
+&gt;&gt;&gt; v2 = imv.viewi(z2)
+</pre></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch04.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch04.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch05.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 4. Using MayaVi from Python </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Chapter 5. Information for Developers</td></tr></table></div></body></html>

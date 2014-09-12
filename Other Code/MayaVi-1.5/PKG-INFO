@@ -1,0 +1,11 @@
+Metadata-Version: 1.0
+Name: MayaVi
+Version: 1.5
+Summary: The MayaVi Data Visualizer
+Home-page: http://mayavi.sourceforge.net
+Author: Prabhu Ramachandran
+Author-email: prabhu_r@users.sf.net
+License: BSD
+Description: A powerful scientific data visualizer for Python
+Keywords: scientific data visualization,VTK,graphics
+Platform: Any

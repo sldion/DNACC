@@ -1,0 +1,319 @@
+#!/usr/bin/env python
+
+""" A script that parses command line arguments and launches MayaVi.
+This is to be used by folks who wish to use MayaVi as a standalone
+application.
+
+This code is distributed under the conditions of the BSD license.  See
+LICENSE.txt for details.
+
+Copyright (c) 2001-2005, Prabhu Ramachandran.
+
+This software is distributed WITHOUT ANY WARRANTY; without even the
+implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+PURPOSE.  See the above copyright notice for more information.
+
+Author contact information:
+  Prabhu Ramachandran <prabhu_r@users.sf.net>
+
+MayaVi Home: http://mayavi.sourceforge.net
+
+"""
+
+# MayaVi Version - remember to change this!
+VERSION = 1.5
+
+__author__ = "Prabhu Ramachandran <prabhu_r@users.sf.net>"
+__version__ = "$Revision: 1.17 $"
+__date__ = "$Date: 2005/09/12 18:08:30 $"
+
+
+import sys, types, string, getopt, os
+import os.path
+
+def usage ():
+    msg="""Usage:\n\nmayavi [options] ... [arg1] [arg2] ...
+
+Where arg1, arg2 ... are optional file names that correspond to saved
+MayaVi visualizations.  Valid options are one or more of the
+following:
+
+--display DISPLAY
+
+     Use DISPLAY for the X Display.
+
+-g
+--geometry WxH+X+Y
+
+     The geometry of the main window in standard X fashion.
+
+-d vtk-file.vtk
+--vtk vtk-file.vtk    
+
+     vtk-file.vtk can be any VTK file.
+
+-x plot3d-xyz-file
+--plot3d-xyz plot3d-xyz-file
+
+     The plot3d-xyz-file must be a PLOT3D single block co-ordinate
+     file.
+
+-q plot3d-q-file
+--plot3d-q plot3d-q-file
+
+     The plot3d-q-file must be a PLOT3D single block solution file.
+     The -q option is optional but must always follow the
+     -x/--plot3d-xyz option.
+
+-e ensight-case-file
+--ensight ensight-case-file
+
+     ensight-case-file must be a valid EnSight case file.  EnSightGold
+     and EnSight6 formats are supported.
+
+-m module-name
+--module module-name
+
+     The passed module name is loaded in the current ModuleManager.
+     The module name must be a valid one if not you will get an error
+     message.  If a module is specified as 'User.Module' then the
+     module to be loaded is first searched for in the user defined
+     search paths (configurable via the Preferences dialog) and then in
+     the standard MayaVi modules directory.
+
+--filter filter-name
+-f filter-name
+
+     The passed filter name is loaded in the current ModuleManager.
+     The filter name must be a valid one if not you will get an error
+     message.  If the filter is 'UserDefined' then it could be
+     specified as 'UserDefined:vtkSomeFilter' where vtkSomeFilter is a
+     valid VTK class.  In this case the filter will not prompt you for
+     the VTK filter to use.  If a filter is specified as 'User.Filter'
+     then the filter to be loaded is first searched for in the user
+     defined search paths (configurable via the Preferences dialog) and
+     then in the standard MayaVi filters directory.
+
+-z saved-visualization-file
+--viz saved-visualization-file
+--visualization saved-visualization-file
+
+     Loads a previously saved MayaVi visualization file passed as the
+     argument.
+
+-M module-manager-file
+--module-mgr module-manager-file
+
+     Loads a module manager saved to a file.  If a file that does not
+     exist is given this will simply create a new module manager that
+     can be populated with filters and modules.
+
+-w vrml-file
+--vrml vrml-file
+
+     Imports a VRML2 scene given an appropriate file.
+
+-3 3DStudio-file
+--3ds 3dStudio-file
+
+     Imports a 3D Studio scene given an appropriate file.
+
+-n
+--new-window
+
+     Creates a new window.  Any options passed after this will apply
+     to this newly created window.
+
+-V 
+--version
+
+     Prints the MayaVi version.
+
+-h
+--help
+
+     Prints this help message.
+
+Examples:
+
+     mayavi examples/heart.mv
+
+     mayavi -z examples/heart.mv -n -z examples/other.mv
+
+     mayavi -d examples/heart.vtk -m Axes -m GridPlane \\
+     -M new -f Threshold -m IsoSurface \\
+     -n -d examples/heart.vtk -m Outline -m ContourGridPlane 
+"""
+    return msg
+
+
+def parse_cmd_line (arguments):
+    """Returns the options and arguments parsed via getopts.
+    
+    Input Arguments:
+      arguments -- This can be either a list of arguments as in      
+                   sys.argv[1:] or a string that is similar to the one
+                   passed on the command line.  If it is a string the
+                   string is split to create a list of arguments.
+    """
+    if type (arguments) is types.StringType:
+        arguments = string.split (arguments)
+        
+    options = "g:d:x:q:e:m:f:z:M:w:3:n"
+    
+    long_opts = ['geometry=', 'display=', 'vtk=', 'plot3d-xyz=',
+                 'plot3d-q=', 'ensight=', 'module=', 'filter=',
+                 'visualization=', 'viz=', 'module-mgr=',
+                 'vrml=', '3ds=', 'new-window']
+    
+    try:
+        opts, args = getopt.getopt (arguments, options, long_opts)
+    except getopt.error, msg:
+        print msg
+        print usage ()
+        print '-'*70
+        print msg
+        sys.exit (1)
+        
+    return opts, args
+
+
+def process_cmd_line (app, opts, args):
+    """ Processes the passed command line arguments.  Returns a list
+    of MayaViTkGUI instances.  This is useful when new windows are
+    created from the command line because the new windows are all
+    referenced in the returned list.
+
+    Input Arguments:
+      app -- A MayaViTkGUI instance.
+
+      opts -- The list of options returned by getopt.
+
+      args -- The remaining arguments returned by getopt.
+    """    
+
+    in_plot3d = 0
+    xyz_file = ""
+
+    apps = [app]
+    geometry = ""
+
+    for o, a in opts:
+        if o in ('-g', '--geometry'):
+            app.root.geometry(a)
+            geometry = a
+
+        if in_plot3d:
+            if o in ('-q', '--plot3d-q'):
+                app.open_plot3d (xyz_file, a, config=0)
+            else:
+                app.open_plot3d (xyz_file, config=0)
+            in_plot3d = 0
+        else:
+            if o in ('-q', '--plot3d-q'):
+                print "Sorry, the -q/--plot3d-q option must follow "\
+                      "a -x/--plot3d-xyz."
+
+        if o in ('-x', '--plot3d-xyz'):
+            in_plot3d = 1
+            xyz_file = a
+
+        if o in ('-d', '--vtk'):
+            base, ext = os.path.splitext(a)
+            if ext in ['.xml', '.vti', '.vtr', '.vts', '.vtp', '.vtu',
+                       '.pvti', '.pvtr', '.pvts', '.pvtp', '.pvtu']:
+                app.open_vtk_xml(a, config=0)
+            else:
+                app.open_vtk (a, config=0)
+
+        if o in ('-e', '--ensight'):
+            app.open_ensight(a, config=0)
+
+        if o in ('-m', '--module'):
+            app.load_module (a, config=0)
+
+        if o in ('-f', '--filter'):
+            app.load_filter (a, config=0)
+
+        if o in ('-z', '--visualization', '--viz'):
+            app.load_visualization (a)
+
+        if o in ('-M', '--module-mgr'):
+            app.load_mm (a)
+            
+        if o in ('-w', '--vrml'):
+            app.open_vrml2 (a)
+
+        if o in ('-3', '--3ds'):
+            app.open_3ds (a)
+
+        if o in ('-n', '--new-window'):
+            app = app.new_window ()
+            if geometry:
+                app.root.geometry (geometry)
+            apps.append (app)
+
+    # for remaining arguments simply load saved visualizations.
+    for arg in args:
+        base, ext = os.path.splitext (arg)
+        if ext == '.mv':
+            app.load_visualization (arg)
+        else:
+            print usage ()
+            print "*"*70
+            print "Error:"
+            print "\tPlease specify a MayaVi file with a '.mv' extension."
+            print "\tFor details on how to load other files read the above"
+            print "\tusage documentation."
+            print "*"*70
+            sys.exit (0)
+
+    return apps
+
+
+# If the user just wants help messages.  Print them before importing
+# any of the big modules.
+if ('-h' in sys.argv[1:]) or ('--help' in sys.argv[1:]):
+    print usage ()
+    sys.exit (0)
+
+if ('-V' in sys.argv[1:]) or ('--version' in sys.argv[1:]):
+    print 'MayaVi %s'%VERSION
+    sys.exit (0)
+
+
+import Tkinter
+
+# Import this here to avoid hard-to-debug errors when importing VTK
+# fails from within mayavi.Main.
+import vtk
+
+try:
+    # check if mayavi is available as a module.
+    import mayavi
+except ImportError:
+    # the script is being run from the main directory.
+    import Main
+    MayaViTkGUI = Main.MayaViTkGUI
+else:
+    MayaViTkGUI = mayavi.Main.MayaViTkGUI
+
+
+opts, args = parse_cmd_line (sys.argv[1:])
+
+display = ""
+if os.name == 'posix':
+    for o, a in opts:
+        if o in ('--display',):
+            display = a
+            break
+
+if display:
+    r = Tkinter.Tk (screenName=display)
+else:
+    r = Tkinter.Tk ()
+r.withdraw ()
+
+app = MayaViTkGUI (r)
+process_cmd_line (app, opts, args)
+r.mainloop ()

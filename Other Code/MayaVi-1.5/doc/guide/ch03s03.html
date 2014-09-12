@@ -1,0 +1,47 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Opening a data file</title><meta name="generator" content="DocBook XSL Stylesheets V1.68.1"><link rel="start" href="index.html" title="MayaVi Users Guide"><link rel="up" href="ch03.html" title="Chapter 3. Using MayaVi"><link rel="prev" href="ch03s02.html" title="Data formats"><link rel="next" href="ch03s04.html" title="Visualizing the Data"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Opening a data file</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s02.html">Prev</a> </td><th width="60%" align="center">Chapter 3. Using MayaVi</th><td width="20%" align="right"> <a accesskey="n" href="ch03s04.html">Next</a></td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="open-file"></a>Opening a data file</h2></div></div></div><p>
+Once data suitable for MayaVi is available one can begin the
+visualization.  If you don't have data then please note that MayaVi
+ships with a simple example of a heart CT scan data in the VTK data
+format (this should be in the <code class="filename">examples/</code> directory).  The dataset used is
+a structured points dataset with a scalar field.  More VTK, PLOT3D and
+EnSight data samples should be available from the <a href="http://www.vtk.org/get-software.php" target="_top">VTK download
+page</a>.
+</p><p>
+The first thing to do is load an appropriate data file.  Visit the
+<span class="guimenu">File</span> menu and choose the appropriate menu item for
+the data you have and select the file you want from the resulting GUI.
+Once you do this, you will notice that the control panel will show a
+<span class="emphasis"><em>DataVizManager</em></span> at the topmost list and you will
+see a lot of controls below this.  The <a href="ch03.html#control-panel" title="The Control Panel">control panel</a> is described in some
+detail in <a href="ch03.html#control-panel" title="The Control Panel">this</a> section.  If you
+aren't familiar with that section yet, this might be a good time to
+<a href="ch03.html#control-panel" title="The Control Panel">review</a> it.
+</p><p>
+Once the data file is opened a dialog box will pop up that allows one
+to configure the datafile.  One can choose the appropriate data field
+one is interested in.  This configuration window can be closed when
+unnecessary.  To reconfigure the data use the <span class="guibutton">Configure
+Data</span> button provided in the <a href="ch03.html#control-panel" title="The Control Panel">control panel</a>.  Only one scalar
+attribute and one vector attribute is supported at a given time.  Each
+<span class="emphasis"><em>DataVizManager</em></span> that is seen represents a
+different file.  One can open as many data files as one wants.
+Different data types can be loaded simultaneously too.  Using a
+similar procedure one can import a simple VRML2 scene or even a 3D
+studio file.  To close a VRML or 3D Studio file choose the appropriate
+file in the <span class="guimenu">Close</span> menu.
+</p><p>
+MayaVi also supports time series data.  If the file name ends with an
+integer, MayaVi treats this integer as a time index.  All files in the
+same directory as the loaded file are scanned.  If any of them share
+the same pattern (without the last integer) as the name of the opened
+file, then the files are treated as part of the time series.  These
+files are then sorted.  The <span class="guibutton">Configure Data</span> GUI
+automatically addes a slider to switch between these time steps and an
+auto-sweep button to sweep through the time series.
+</p><p>
+Once the data file is read and a <code class="classname">DataVizManager</code>
+is created an instance of a <code class="classname">ModuleManager</code> is
+also created.  At this point one has to load the
+<code class="classname">Filter</code>s and the <code class="classname">Module</code>s
+in order to do the visualization.
+</p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03s02.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch03s04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Data formats </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Visualizing the Data</td></tr></table></div></body></html>

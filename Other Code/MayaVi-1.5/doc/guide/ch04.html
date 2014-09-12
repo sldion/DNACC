@@ -1,0 +1,162 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Chapter 4. Using MayaVi from Python</title><meta name="generator" content="DocBook XSL Stylesheets V1.68.1"><link rel="start" href="index.html" title="MayaVi Users Guide"><link rel="up" href="index.html" title="MayaVi Users Guide"><link rel="prev" href="ch03s09.html" title="Filter Documentation"><link rel="next" href="ch04s02.html" title="Useful Python Modules"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter 4. Using MayaVi from Python</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s09.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch04s02.html">Next</a></td></tr></table><hr></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="python-module"></a>Chapter 4. Using MayaVi from Python</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="sect1"><a href="ch04.html#interpreter-example">An example</a></span></dt><dd><dl><dt><span class="sect2"><a href="ch04.html#generate-data"> Generating some data </a></span></dt><dt><span class="sect2"><a href="ch04.html#viz-data"> Visualize the generated data </a></span></dt><dt><span class="sect2"><a href="ch04.html#using-vtkdata"> Using VTK data objects </a></span></dt><dt><span class="sect2"><a href="ch04.html#standalone-scripts"> Standalone MayaVi scripts </a></span></dt></dl></dd><dt><span class="sect1"><a href="ch04s02.html">Useful Python Modules</a></span></dt><dd><dl><dt><span class="sect2"><a href="ch04s02.html#ivtk">The Interactive VTK module</a></span></dt><dt><span class="sect2"><a href="ch04s02.html#tools">The MayaVi <code class="classname">tools</code> sub-package</a></span></dt></dl></dd></dl></div><p> If you have installed MayaVi from the sources and are not using
+a binary release, then you can use MayaVi as a Python module.  This
+chapter details how you can use MayaVi as a Python module.  If you are
+looking for a powerful, interactive, cross-platform Python interpreter
+you might be interested in <a href="http://ipython.scipy.org" target="_top">IPython.</a>
+</p><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="interpreter-example"></a>An example</h2></div></div></div><p>
+Its very easy using MayaVi as a Python module.  Thanks to Tkinter, it
+is also possible to use MayaVi from the Python interpreter.  This
+means that one can script MayaVi!  This is a pretty powerful and
+useful feature.  To illustrate using MayaVi as a module and its
+scriptability, we will consider a few simple examples where the user
+generates some data and a VTK file and then uses MayaVi to visualize
+the data.
+</p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="generate-data"></a> Generating some data </h3></div></div></div><pre class="programlisting">
+&gt;&gt;&gt; # generate the data.
+&gt;&gt;&gt; from Numeric import *
+&gt;&gt;&gt; import scipy
+&gt;&gt;&gt; x = (arange(50.0)-25)/2.0
+&gt;&gt;&gt; y = (arange(50.0)-25)/2.0
+&gt;&gt;&gt; r = sqrt(x[:,NewAxis]**2+y**2)
+&gt;&gt;&gt; z = 5.0*scipy.special.j0(r)  # Bessel function of order 0
+&gt;&gt;&gt; # now dump the data to a VTK file.
+&gt;&gt;&gt; import pyvtk
+&gt;&gt;&gt; # Flatten the 2D array data as per VTK's requirements.
+&gt;&gt;&gt; z1 = reshape(transpose(z), (-1,))
+&gt;&gt;&gt; point_data = pyvtk.PointData(pyvtk.Scalars(z1))
+&gt;&gt;&gt; grid = pyvtk.StructuredPoints((50,50, 1), (-12.5, -12.5, 0), (0.5, 0.5, 1))
+&gt;&gt;&gt; data = pyvtk.VtkData(grid, point_data)
+&gt;&gt;&gt; data.tofile('/tmp/test.vtk')
+</pre><p>
+The above example uses the <a href="http://numpy.sourceforge.net" target="_top">
+Numeric </a>, <a href="http://www.scipy.org" target="_top">SciPy</a> and
+<a href="http://cens.ioc.ee/projects/pyvtk/" target="_top"> pyVtk </a>
+modules.  Please note the step where <code class="varname">z1</code> is obtained
+from <code class="varname">z</code>.  This step is done to correctly flatten the
+two dimensional array <code class="varname">z</code>.  The problem with Numeric
+arrays and VTK data is that you have to be careful of the order of the
+data points.  The way VTK reads data (for all the data formats that
+have a structure) is something like this:
+</p><pre class="programlisting">
+&gt;&gt;&gt; for k in range(n_z):
+&gt;&gt;&gt;     for j in range(n_y):
+&gt;&gt;&gt;         for i in range(n_x):
+&gt;&gt;&gt;             read_line()
+</pre><p>
+This means that the x values must be iterated over first, the y values
+next and the z values last.  If you simply flatten the 2D numeric
+array then this will not happen properly.  By using
+<code class="function">reshape(transpose(z), (-1,))</code> we ensure that the
+data points are specified in the correct order.  The next step is to
+visualize the generated data.
+</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="viz-data"></a> Visualize the generated data </h3></div></div></div><pre class="programlisting">
+&gt;&gt;&gt; import mayavi
+&gt;&gt;&gt; v = mayavi.mayavi() # create a MayaVi window.
+&gt;&gt;&gt; d = v.open_vtk('/tmp/test.vtk', config=0) # open the data file.
+&gt;&gt;&gt; # The config option turns on/off showing a GUI control for the data/filter/module.
+&gt;&gt;&gt; # load the filters.
+&gt;&gt;&gt; f = v.load_filter('WarpScalar', config=0) 
+&gt;&gt;&gt; n = v.load_filter('PolyDataNormals', 0)
+&gt;&gt;&gt; n.fil.SetFeatureAngle (45) # configure the normals.
+&gt;&gt;&gt; # Load the necessary modules.
+&gt;&gt;&gt; m = v.load_module('SurfaceMap', 0)
+&gt;&gt;&gt; a = v.load_module('Axes', 0)
+&gt;&gt;&gt; a.axes.SetCornerOffset(0.0) # configure the axes module.
+&gt;&gt;&gt; o = v.load_module('Outline', 0)
+&gt;&gt;&gt; v.Render() # Re-render the scene.
+</pre><div class="screenshot"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" cellspacing="0" cellpadding="0" width="75%"><tr><td><img src="figures/cmd_line_sc_shot.jpg" width="100%" alt="MayaVi from the Python interpreter"></td></tr></table><div class="caption"><p>A MayaVi window launched from the Python interpreter.</p></div></div></div><p>
+The result of this is seen in the above figure.  It is important to
+note that the Python interpreter will continue to remain interactive
+when MayaVi is running.  In fact, it is possible to create an
+animation from the interpreter as done in the following.
+</p><pre class="programlisting">
+&gt;&gt;&gt; # now do some animation.
+&gt;&gt;&gt; import time
+&gt;&gt;&gt; for i in range (0, 10):
+...  f.fil.SetScaleFactor(i*0.1)
+...  v.Render()
+...  v.renwin.save_png('/tmp/anim%d.png'%i) # save the image to a PNG file
+...  time.sleep(1)
+&gt;&gt;&gt; 
+</pre><p>
+The above example saves the screen each iteration to a PNG image.  One
+will need VTK 4.0 for PNG support.  These images can be later used by
+some other utility to create a movie.  It is therefore possible to
+create very useful visualizations from within the Python interpreter.
+</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="using-vtkdata"></a> Using VTK data objects </h3></div></div></div><p>
+There are times when the user has created a VTK data object that needs
+to be visualized.  MayaVi has a special data handler for such cases.
+The following shows how this can be used.  The example itself uses a
+VTK file but the data could have also been generated using other
+means.
+</p><pre class="programlisting">
+&gt;&gt;&gt; # import VTK
+&gt;&gt;&gt; import vtk
+&gt;&gt;&gt; # create some data.
+&gt;&gt;&gt; reader = vtk.vtkStructuredPointsReader()
+&gt;&gt;&gt; reader.SetFileName('/tmp/test.vtk')
+&gt;&gt;&gt; reader.Update()
+&gt;&gt;&gt; data = reader.GetOutput()  # this is a vtkStructuredPoints object.
+&gt;&gt;&gt; import mayavi
+&gt;&gt;&gt; v = mayavi.mayavi() # create a MayaVi window
+&gt;&gt;&gt; v.open_vtk_data(data) # load the data from the vtkStructuredPoints object.
+&gt;&gt;&gt; f = v.load_filter('WarpScalar', 0)
+&gt;&gt;&gt; # Load other filters and modules...
+</pre><p>
+The above example uses a <code class="classname">vtkStructuredPoints</code> as
+the input.  Other types can also be used as the input.  The other
+valid types are: <code class="classname">vtkRectilinearGrid</code>,
+<code class="classname">vtkStructuredGrid</code>,
+<code class="classname">vtkUnstructuredGrid</code> and
+<code class="classname">vtkPolyData</code>.  Any of these objects can be used
+as an input and then visualized using MayaVi.
+</p><p>
+Right now the best way to find out what functions are available etc.
+would be to read the sources or use pydoc to browse through the code.
+Experimenting with MayaVi from the interpreter is also a good idea and
+will be highly educative.
+</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="standalone-scripts"></a> Standalone MayaVi scripts </h3></div></div></div><p>
+After interactively exploring MayaVi from the interpreter one usually
+would like to run these in a non-interactive fashion.  That is you'd
+like to create a Python script that invokes MayaVi.  The easiest way
+to do it is as shown in the following simple example
+</p><pre class="programlisting">
+import mayavi
+v = mayavi.mayavi()
+v.load_visualization('heart.mv')
+# Do whatever you please with the MayaVi window.
+
+# To make the MayaVi window interact with the user and wait
+# till it is closed to proceed, do the following:
+v.master.wait_window()
+
+# Now once the previous window is closed if you need
+# to open another do this:
+v = mayavi.mayavi()
+d = v.open_vtk('file.vtk')
+# etc.
+v.master.wait_window()
+
+# Once the MayaVi window is closed the program will exit.
+</pre><p> 
+
+As can be seen above, it is easy to use code from an interactive
+session in a standalone Python script.  It is also possible to script
+MayaVi in the following manner.
+</p><pre class="programlisting">
+import Tkinter
+r = Tkinter.Tk()
+r.withdraw()
+import mayavi
+v = mayavi.Main.MayaViTkGUI(r)
+v.load_visualization('heart.mv')
+# Do whatever you please with the MayaVi window.
+
+# now do this to start the Tk event loop.
+root.mainloop()
+# Once the MayaVi window is closed the program will exit.
+</pre><p> This is an alternative way to do use MayaVi from Python
+scripts.  This might be helpful if you have used
+<code class="classname">Tkinter</code> and know how to use it.  However, the
+first approach is a lot easier.
+</p></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03s09.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ch04s02.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Filter Documentation </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Useful Python Modules</td></tr></table></div></body></html>

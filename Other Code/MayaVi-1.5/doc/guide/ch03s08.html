@@ -1,0 +1,150 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Module Documentation</title><meta name="generator" content="DocBook XSL Stylesheets V1.68.1"><link rel="start" href="index.html" title="MayaVi Users Guide"><link rel="up" href="ch03.html" title="Chapter 3. Using MayaVi"><link rel="prev" href="ch03s07.html" title="The Menus"><link rel="next" href="ch03s09.html" title="Filter Documentation"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Module Documentation</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s07.html">Prev</a> </td><th width="60%" align="center">Chapter 3. Using MayaVi</th><td width="20%" align="right"> <a accesskey="n" href="ch03s09.html">Next</a></td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="module-docs"></a>Module Documentation</h2></div></div></div><p> The following are the list of provided Modules along with a brief description.</p><div class="glosslist"><dl><dt>
+Axes
+</dt><dd><p> This module creates and manages a set of three axes for your
+    data.  The class uses a vtkCubeAxesActor2D.
+</p></dd><dt>
+BandedSurfaceMap
+</dt><dd><p> Displays a surface map with special contouring using the
+    vtkBandedPolyDataContourFilter.  This contour filter produces
+    filled contours of the same color between two contour lines rather
+    than either a continuous color distribution or just individual
+    contour lines.  It should work for any input dataset.  It is best
+    used for 2d surfaces.  Note that one can either specify a total
+    number of contours between the minimum and maximum values by
+    entering a single integer or specify the individual contours by
+    specifying a Python list/tuple in the GUI.
+</p></dd><dt>
+ContourGridPlane
+</dt><dd><p> This module shows a grid plane of the given input structured,
+    rectilinear or structured points grid with the scalar data either
+    as a color map or as contour lines.  This works only for
+    structured grid, structured point and rectilinear grid data.  Note
+    that one can either specify a total number of contours between the
+    minimum and maximum values by entering a single integer or specify
+    the individual contours by specifying a Python list/tuple in the
+    GUI.
+</p></dd><dt>
+CustomGridPlane
+</dt><dd><p>This module shows a grid plane of the given input grid.  The
+    plane can be shown as a wireframe or coloured surface with or
+    without scalar visibility and contour lines.  The module basically
+    wraps around the vtk*GeometryFilters.  This module enables one to
+    completely configure the grid plane.  It works only for structured
+    grid, structured point and rectilinear grid datasets.  Note that
+    one can either specify a total number of contours between the
+    minimum and maximum values by entering a single integer or specify
+    the individual contours by specifying a Python list/tuple in the
+    GUI.
+</p></dd><dt>
+Glyph
+</dt><dd><p> This module displays glyphs scaled and colored as per the
+    input data.  This will work for any dataset and can be used for
+    both scalar and vector data. 
+</p></dd><dt>
+GridPlane
+</dt><dd><p> This module shows a grid plane of the given input grid.  The
+    plane can be shown as a wireframe or coloured surface with or
+    without scalar visibility.  This works only for structured grid,
+    structured point and rectilinear grid data.  Useful for debugging
+    and displaying your created grid.
+</p></dd><dt>
+HedgeHog
+</dt><dd><p> This module shows the given vector data as a 'hedge hog' plot.
+    The lines can be colored based on the input scalar data.  This
+    class should work with any dataset.  
+</p></dd><dt>
+IsoSurface
+</dt><dd><p> This module shows an iso-surface of scalar data. This will
+    work for any dataset.
+</p></dd><dt>
+Labels
+</dt><dd><p> Displays text labels of input data.  When instantiated, the
+    class can be given a module name (the same name as listed in the
+    Modules GUI) or an index of the module (starting from 0) in the
+    current module manager.  If this is not provided the module will
+    ask the user to choose a particular module or choose filtered
+    data.  The module will then generate text lables for the data in
+    the chosen module and display it.  The module provides many
+    configuration options.  It also lets one turn on and off the use
+    of a vtkSelectVisiblePoints filter.  Using this filter will cause
+    the module to only display visible points.  Note that if the
+    module that is being labeled has changed significantly or is
+    deleted this Labels module will have to be updated by changing one
+    of the settings (like the RandomModeOn check button) to a
+    different value and then back to the original one.  Alternatively,
+    choose the module to be labeled again.
+    
+</p></dd><dt>
+Locator
+</dt><dd><p> This module creates a 'Locator' axis, that can be used to mark
+    a three dimensional point in your data. 
+</p></dd><dt>
+Outline
+</dt><dd><p> Displays an Outline for any data input.
+</p></dd><dt>
+PolyData
+</dt><dd><p> Displays any input polydata, nothing fancy.
+</p></dd><dt>
+ScalarCutPlane
+</dt><dd><p> This module plots scalar data on a cut plane either as a color
+    map or with contour lines.  This will work for any dataset.  Note
+    that one can either specify a total number of contours between the
+    minimum and maximum values by entering a single integer or specify
+    the individual contours by specifying a Python list/tuple in the
+    GUI.
+</p></dd><dt>
+Streamlines
+</dt><dd><p> This module makes it possible to view streamlines,
+    streamtubes, and stream ribbons for any type of vector data.  Any
+    number of point sources can be added and deleted.  A fairly
+    powerful UI is provided.  This module should work with any
+    dataset.  
+</p></dd><dt>
+StructuredGridOutline
+</dt><dd><p> Displays an Outline for a structured grid.
+</p></dd><dt>
+SurfaceMap
+</dt><dd><p> Displays a surface map of any data.  It should work for any
+    dataset but is best if used for 2d surfaces (polydata and
+    unstructured surfaces).  Note that one can either specify a total
+    number of contours between the minimum and maximum values by
+    entering a single integer or specify the individual contours by
+    specifying a Python list/tuple in the GUI. 
+</p></dd><dt>
+TensorGlyphs
+</dt><dd><p> This module displays glyphs, scaled and colored as per the
+    tensor data.  This will work for any dataset. 
+</p></dd><dt>
+Text
+</dt><dd><p> Displays simple text on the screen.  The text properties and
+    position are configurable.  The text can also be multi-line if
+    newlines are embedded in it.
+</p></dd><dt>
+VectorCutPlane
+</dt><dd><p> This module displays cone glyphs scaled and colored as per the
+    vector or scalar data on cut plane.  This will work for any
+    dataset. 
+</p></dd><dt>
+VelocityVector
+</dt><dd><p> This module displays cone or arrow glyphs scaled and colored
+    as per the vector data.  This will work for any dataset. 
+</p></dd><dt>
+Volume
+</dt><dd><p> This Volume module allows one to view a structured points
+    dataset with either unsigned char or short data as a volume.  The
+    module also provides a powerful GUI to edit the Color Transfer
+    Function (CTF).  You can drag the mouse with different buttons to
+    change the colors.  The following are the mouse buttons and key
+    combinations that can be used to edit the CTF -- red curve:
+    Button-1, green curve: Button-2/Control-Button-1, blue curve:
+    Button-3/Control-Button-2, alpha/opacity: Shift-Button-1.
+
+    It is possible to use either the vtkVolumeRayCastMapper or the
+    vtkVolumeTextureMapper2D.  It is also possible to choose among
+    various ray cast functions.  
+</p></dd><dt>
+WarpVectorCutPlane
+</dt><dd><p> This module takes a cut plane and warps it using a
+    vtkWarpVector as per the vector times a scale factor.  This will
+    work for any dataset. 
+</p></dd></dl></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03s07.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch03s09.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">The Menus </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Filter Documentation</td></tr></table></div></body></html>

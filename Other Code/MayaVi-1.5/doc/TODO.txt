@@ -1,0 +1,91 @@
+                        The MayaVi TODO List
+                        --------------------
+
+MayaVi2 is a complete rewrite.  It is currently (9/2005) under heavy
+development.  MayaVi2 uses traits and the Envisage application
+framework.  More details on it may be had from the trac pages here:
+
+ http://www.enthought.com/enthought
+
+Development has been graciously funded by Enthought, Inc.  The code is
+released under a BSD license.
+
+
+Below is the earlier rough TODO list for MayaVi-1.x.  Almost all of
+these features are already incorporated in MayaVi2.
+
+
+MayaVi-2.0
+^^^^^^^^^^
+
+    * Use Pmw to improve the GUI.
+  
+    * import mechanism - fix it by moving files around.  Currently
+      there are dirty hacks in some of the __init__.py files.
+
+    * Clean up pipeline browser.
+
+    * Incorporate Charl Botha's wxVTKPipeline code.
+
+    * Clean up API:
+
+       - Refactor, redesign, uniform naming, nicer code style.
+
+       - Remove "debug" functions.
+
+       - Split GUI from functionality, allow for keyword args to
+         constructor, cleaner interfaces, improved scriptability.
+
+       - Improved/Changed file format (use a dictionary?).
+
+       - Allow for other toolkits to be used for the GUI.
+
+       - Use the traits package if it will help.
+
+    * Improved default handling.
+
+    * Make it possible to use LOD actors.
+
+    * Support for multiple data outputs per source/reader.
+
+
+Future releases
+^^^^^^^^^^^^^^^
+
+    * Handle field data attributes.
+
+    * Create a simple custom module creator and create more filters
+      like objects so user can build custom visualizations.
+
+    * Add more gui controls for clamped variables in the
+      vtkMethodParser.
+
+    * Advanced visualization pipeline editor for custom modules and
+      filters.
+
+    * Readers for image/data files of various types.  BMP, BYU, DEM,
+      JPEG, OBJ, PLY, PNG, PNM, Particle, SLC, STL, TIFF, Volume,
+      Volume16, UGFacet, GESigna, DICOMImage.
+
+    * Generalize the streamlines a bit and using PlaneSource,
+      LineSource, SphereSource and DiskSource.
+
+    * Add support to generate animation sequences for movies etc.
+
+    * Support for time dependent data or data files.
+
+
+Todo or not todo?
+^^^^^^^^^^^^^^^^^
+
+    * More export options? vtkPolyDataWriter, CGM?
+
+    * Off screen rendering option?
+
+    * Keyboard motion for camera?
+
+    * Find values along a line (arbitrary probe?) or picking?
+
+    * Arguments can be passed on the command line for different
+      modules?  Might need to use Optik for this.
+

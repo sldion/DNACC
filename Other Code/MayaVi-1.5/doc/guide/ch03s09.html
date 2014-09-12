@@ -1,0 +1,116 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Filter Documentation</title><meta name="generator" content="DocBook XSL Stylesheets V1.68.1"><link rel="start" href="index.html" title="MayaVi Users Guide"><link rel="up" href="ch03.html" title="Chapter 3. Using MayaVi"><link rel="prev" href="ch03s08.html" title="Module Documentation"><link rel="next" href="ch04.html" title="Chapter 4. Using MayaVi from Python"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Filter Documentation</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s08.html">Prev</a> </td><th width="60%" align="center">Chapter 3. Using MayaVi</th><td width="20%" align="right"> <a accesskey="n" href="ch04.html">Next</a></td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="filter-docs"></a>Filter Documentation</h2></div></div></div><p> The following are the list of provided Filters along with a brief description.</p><div class="glosslist"><dl><dt>
+CellToPointData
+</dt><dd><p> This class produces PointData given an input that contains
+    CellData.  This is useful because many of VTK's algorithms work
+    best with PointData.  The filter basically wraps the
+    vtkCellDataToPointData class. 
+</p></dd><dt>
+CutPlane
+</dt><dd><p> This filter takes a cut plane of any given input data set.  It
+    interpolates the attributes onto a plane.  The position and
+    orientation of the plane are configurable using a GUI.  
+</p></dd><dt>
+Delaunay2D
+</dt><dd><p> This filter wraps around the vtkDelaunay2D filter and lets you
+    do 2D triangulation of a collection of points.  The key parameters
+    are Tolerance and the Alpha value.  Tolerance gives the criteria
+    for joining neighbouring data points and alpha is the threshold
+    for the circumference of a caluculated triangulated polygon.  
+</p></dd><dt>
+Delaunay3D
+</dt><dd><p> This filter wraps around the vtkDelaunay3D filter and lets you
+    do 3D triangulation of a collection of points.  The key parameters
+    are Tolerance and the Alpha value.  Tolerance gives the criteria
+    for joining neighbouring data points and alpha is the threshold
+    for the circumference of a caluculated triangulated polygon.  
+</p></dd><dt>
+ExtractGrid
+</dt><dd><p> Wraps vtkExtractGrid (structured grid), vtkExtractVOI
+    (imagedata/structured points) and vtkExtractRectilinearGrid
+    (rectilinear grids).  These filters enable one to select a portion
+    of, or subsample an input dataset.  Depending on the input data
+    the appropriate filter is used.  
+</p></dd><dt>
+ExtractTensorComponents
+</dt><dd><p> This wraps the vtkExtractTensorComponents filter and allows
+    one to select any of the nine components or the effective stress
+    or the determinant from an input tensor data set.  This will work
+    for any dataset. 
+</p></dd><dt>
+ExtractUnstructuredGrid
+</dt><dd><p> This wraps the vtkExtractUnstructuredGrid filter.  From the
+    VTK docs: vtkExtractUnstructuredGrid is a general-purpose filter
+    to extract geometry (and associated data) from an unstructured
+    grid dataset. The extraction process is controlled by specifying a
+    range of point ids, cell ids, or a bounding box (referred to as
+    'Extent').  Those cells lying within these regions are sent to the
+    output.  The user has the choice of merging coincident points
+    (Merging is on) or using the original point set (Merging is
+    off).
+</p></dd><dt>
+ExtractVectorComponents
+</dt><dd><p> This wraps the vtkExtractVectorComponents filter and allows
+    one to select any of the three components of an input vector data
+    attribute. 
+</p></dd><dt>
+ExtractVectorNorm
+</dt><dd><p> This wraps the vtkVectorNorm filter and produces an output
+    scalar data with the magnitude of the vector. 
+</p></dd><dt>
+MaskPoints
+</dt><dd><p> This wraps the vtkMaskPoints filter.  The problem with this
+    filter is that its output is Polygonal data.  This means that if
+    you add this filter to a ModuleManager with visualizations apart
+    from HedgeHog or other velocity vector data you won't see
+    anything!  If that happens create another ModuleManager and show
+    the other visualizations there. Also, this means that this filter
+    should be typically inserted at the end of the list of filters.
+</p></dd><dt>
+PolyDataNormals
+</dt><dd><p> This wraps the vtkPolyDataNormals filter.  vtkPolyDataNormals
+    is a filter that computes point normals for a polygonal mesh.
+    This filter tries its best to massage the input data to a suitable
+    form.  Its output is a vtkPolyData object.  Computing the normals
+    is very useful when one wants a smoother looking surface.  
+</p></dd><dt>
+StructuredPointsProbe
+</dt><dd><p> A useful filter that can be used to probe any dataset using a
+    Structured Points dataset.  The filter also allows one to convert
+    the scalar data to an unsigned short array so that the scalars can
+    be used for volume visualization.
+</p></dd><dt>
+Threshold
+</dt><dd><p> This wraps the vtkThreshold filter.  The problem with this
+    filter is that its output is an Unstructured Grid.  This means
+    that if you add this filter to a ModuleManager of a gridded
+    dataset and you have a few grid planes, then your grid planes
+    won't show anymore.  If that happens create another ModuleManager
+    and show the grid planes there acting on unfiltered data. 
+</p></dd><dt>
+UserDefined
+</dt><dd><p> This filter wraps around a user specified filter and lets one
+    experiment with VTK filters that are not yet part of MayaVi.  By
+    default if the class is instantiated it will ask the user for the
+    VTK class to wrap around.  If passed a valid VTK class name it
+    will try to use that particular class.  
+</p></dd><dt>
+Vorticity
+</dt><dd><p>This filter computes the vorticity of an input vector field.
+    For convenience, the filter allows one to optionally pass-through
+    the given input vector field.  The filter also allows the user to
+    show the component of the vorticity along a particular cartesian
+    co-ordinate axes.
+    
+</p></dd><dt>
+WarpScalar
+</dt><dd><p> This wraps the vtkWarpScalar filter.  vtkWarpScalar is a
+    filter that modifies point coordinates by moving points along
+    point normals by the scalar amount times the scale factor.  Useful
+    for creating carpet or x-y-z plots.  
+</p></dd><dt>
+WarpVector
+</dt><dd><p> Warps the geometry using the vtkWarpVector filter.
+    vtkWarpVector is a filter that modifies point coordinates by
+    moving points along vector times the scale factor. Useful for
+    showing flow profiles or mechanical deformation.
+</p></dd></dl></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03s08.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Module Documentation </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Chapter 4. Using MayaVi from Python</td></tr></table></div></body></html>

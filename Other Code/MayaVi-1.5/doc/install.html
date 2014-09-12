@@ -1,0 +1,324 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <title>MayaVi Installation Instructions</title>
+  </head>
+
+  <body>
+    <h1>MayaVi Installation Instructions</h1>
+   
+    <p>
+      The MayaVi home page is at: 
+      <a href="http://mayavi.sourceforge.net">
+	http://mayavi.sourceforge.net</a>.  Please visit there for the
+	latest information on MayaVi.  This document describes the
+	installation procedures for MayaVi.
+    </p>
+
+  <p> 
+    There are currently three ways of installing MayaVi.
+    <ul>
+      <li> <a href="#binary">As a stand-alone binary.</a> </li>
+      
+      <li> <a href="#package">Using RPMs, debs or Enthon</a> </li>
+
+      <li> <a href="#source">From source as a Python module.</a> </li>
+    </ul>
+    The stand-alone binaries are available for Win32 and Linux.  They
+    allow you to install MayaVi as an application without having to
+    install VTK or even Python!  If you are going to use MayaVi as a
+    Python module then you <b>must</b> install it using the other methods.
+  </p>
+
+  <h2><a name="binary">Installation as a binary</a></h2>
+  
+  <p>
+    Currently there are two binaries available.  One for Win32 and the
+    other for Linux.  The Linux and Win32 binaries were made using
+    Gordon McMillan's <a
+    href="http://www.mcmillan-inc.com/install1.html">Installer</a>.
+    The Windows installer was made using <a
+    href="http://www.jrsoftware.org/isdl.php">InnoSetup</a>.
+    Installing the binaries is pretty straight forward.  The download
+    is pretty big since it comes bundled with everything necessary to
+    run MayaVi.  Please note that when you install the binary, you
+    <b>cannot</b> use MayaVi as a Python module from an existing
+    installation of Python.  If you want that, you must install MayaVi
+    from the other installation methods.
+  </p>
+  
+  <p>
+    Both the binary installations ship with a <em>doc/</em> directory
+    containing a quick installation guide, README, etc. and a user
+    guide in <em>doc/guide/book1.html</em>.  Also included is an
+    <em>examples/</em> directory that contains a sample VTK data file
+    of a heart CT scan and a visualization based on that data.
+  </p>
+
+  <h3>Binary installation under Windows</h3>
+  
+  <p>
+    Just <a
+    href="http://mayavi.sourceforge.net/download.html">download</a>
+    the binary, run it to start the installation, answer the questions
+    on where you want to install it etc.  That's it!  If you have
+    problems, please let us know.
+  </p>
+
+  <h3>Binary installation under Linux</h3>
+
+  <p>
+    Installing the Linux binary is also fairly straightforward.  The
+    Linux binary is simply a bzipped tarball.  Untar it and run the
+    <em>mayavi</em> program in the untarred directory.  The binary
+    requires the following:
+    <ul>
+      <li> glibc2.3.2.  This should be standard on most recent Linux
+      installations.</li>
+
+      <li> Mesa/OpenGL: You will need to have libGL.so.1, libGLU.so.1
+      and libGLcore.so.1 installed.</li>
+      
+      <li> X11: You will need to have the X libraries installed.  The
+      binaries were built with XFree86 4.3.  I guess XFree86 4.x
+      should work okay. </li>
+    </ul>
+
+    The above requirements are usually satisfied on almost any
+    reasonably recent Linux machine.  If you have the above installed
+    MayaVi should run fine.  In case you want to install MayaVi in a
+    system wide location its best to install it somewhere and then
+    copy the shell script <em>mayavi</em> thats in the tarball to
+    /usr/local/bin/ (or /usr/bin/) and edit it to use the directory
+    where the executable <em>mayavi.exe</em> is actually installed.
+  </p>
+
+  <h2><a name="package">Using RPMs, debs or Enthon</a></h2>
+
+    <h3><a name="rpm"> RPM </a></h3>
+    <p>
+      Installing the RPM requires that you have installed Python,
+      Tkinter and the <a
+      href="http://www.creatis.insa-lyon.fr/vtk/">VTK RPMs</a> for VTK
+      and VTK-Python.  Once you have these working you can simply
+      install the appropriate (depending on your Python version)
+      MayaVi RPM.  If you have installed VTK from the sources and not
+      via RPMS there should be no problem with installing the MayaVi
+      RPM.
+    </p>
+    
+    <h3><a name="deb"> Debian package </a></h3>
+    <p>
+      To install the Debian package simply install the current Debian
+      MayaVi package (using apt-get install mayavi).  This will rope
+      in all necessary dependencies.  Then simply install the
+      downloaded Debian package.  Debian (woody) ships with VTK 3.2.
+      More recent VTK 4.x binaries (not debs) that work under testing
+      (for the i386) are available <a
+      href="http://mayavi.sf.net/dwnld/vtk/"> here</a>.  These
+      binaries are built under testing.
+    </p>
+
+    <h3><a name="enthon"> Enthought Python for Windows </a></h3>
+    <p>
+      Enthought distributes an <a
+      href="http://www.enthought.com/python/">enhanced Python
+      installer</a> that ships with a huge number of very useful
+      Python packages.  If you install this, you get a fully
+      functional Python installation with MayaVi installed.  Since all
+      MayaVi's requirements are installed as part of Enthon, if you
+      need to upgrade the version of MayaVi that ships with Enthon,
+      you can simply install MayaVi from sources by following the
+      instructions in the <a href="installation">installation of
+      MayaVi</a> section.
+    </p>
+
+  <h2> <a name="source">Installation from Sources</a></h2>
+
+  <p>
+    MayaVi uses <a
+    href="http://www.python.org/sigs/distutils-sig/">distutils</a> for
+    the installation process.  Distutils is part of the Python
+    standard library from versions 2.0 onwards.  So, you should
+    normally have this available.  MayaVi requires that VTK be
+    installed and usable from Python.  For more details please read
+    the MayaVi <a href="#requirements">requirements</a>.
+  </p>
+
+  <p>
+      If you would like to install MayaVi from the sources under
+      Debian GNU/Linux you may simply run 
+  
+  <h3><a name="installation">Installation of MayaVi</a></h3>
+
+  <p>
+    If the <a href="#requirements">requirements</a> are all met,
+    installing MayaVi is simple.  <a
+    href="http://mayavi.sourceforge.net/download.html">Download</a>
+    the tarball, untar/unzip it, change directory to the new directory
+    and do the following:
+    <pre>
+      % python setup.py install
+    </pre>
+    Thats all there is to it.  Under Linux you might want to run this
+    command as root.  For more help on the various options for the
+    install command try this:
+    <pre>
+      % python setup.py install --help
+    </pre>
+    For more help on distutils look <a
+    href="http://python.org/sigs/distutils-sig/doc/">here</a>.
+  </p>
+
+  <p>
+    Please note that if you simply want to run MayaVi without
+    installing it as a module you can always run it straight from the
+    untarred directory like so:
+    <pre>
+      % mayavi [options]
+    </pre>
+  </p>
+
+  <p>
+    Once you have MayaVi installed and running, you can test it by
+    using the example files in the <em>examples/</em> directory of the
+    sources.  The directory contains a sample VTK data file of a heart
+    CT scan and a visualization based on that data.  To run this
+    visualization use the <em>File->Load->Visualization</em> menu and
+    choose the example in the <em>examples</em> directory of the
+    MayaVi source tree.  If this loads fine then you are all set!  For
+    more information on how to use MayaVi read the <a
+    href="docs/guide/book1.html">MayaVi users guide</a>.  This guide
+    is also included along with the source and is in the
+    <em>doc/guide/</em> directory.
+  </p>
+
+  <h3><a name="requirements">Requirements</a></h3>
+  <p>
+    <ul>
+      <li> MayaVi requires:
+	<ul>
+	  <li> Python version >= 2.0  and a working Tkinter.</li>
+	    
+          <li> A working <a
+          href="http://www.python.org/sigs/distutils-sig/">distutils</a>. 
+          </li>
+
+	  <li> The VTK library with the Python bindings, the
+	  VTK-Python Tk widget, and the VTK contrib library compiled.
+	  Under VTK 4.x you also need to compile the Hybrid classes
+	  (there is no 'contrib' directory in VTK 4.x) to get all the
+	  MayaVi modules to work.</li>
+	</ul>
+      </li>
+
+      <li> MayaVi runs fine under Linux and the Windows (TM) operating
+      system.  There are reports that it works on other Unix systems
+      too.  Technically, it should have no problems running on any
+      platform where VTK and Python are available.</li>
+
+      <li> Both the latest stable releases and the nightly VTK 4.x CVS
+      tree builds work fine.</li>
+
+    </ul> 
+  </p>
+    
+  <p>
+    Usually the hardest part of a MayaVi install when using the
+    sources is getting the VTK Python bindings installed properly.
+    The next section tries to address this.
+  </p>
+
+  <h3><a name="install_vtk">Installation of VTK</a> </h3>
+    
+  <p>
+    Before you can run MayaVi you need to have VTK installed and
+    working properly.  There are two ways to install VTK on any
+    platform.  One way is to build the packages from the sources and
+    the other is to download pre-built binary packages.  VTK is a huge
+    package and building from source is not for the weak hearted.  You
+    can download binaries and sources from <a
+    href="http://www.vtk.org/get-software.php"> the VTK
+    download page</a>.
+  </p>
+  <p>
+    Instructions on how to build VTK suitably under Windows for MayaVi
+    are available <a
+    href="http://mayavi.sourceforge.net/cgi-bin/moin.cgi/BuildingVTKOnWin32">here</a>.
+    You should also read the README.html that is included with the VTK
+    sources.  When building VTK from the sources make sure that you
+    build the Python bindings.  It is a good idea to build the Tcl
+    bindings also since that ensures that the VTK-Python Tk widgets
+    are also compiled.
+  </p>
+
+  <p>
+    Pre-built VTK packages are available for Linux and Win32 and these
+    are mentioned below.  If installing VTK from sources is a hassle
+    you should consider trying these instead.
+  </p>
+
+  <p>
+    <dl>
+      <dt> <b>Linux binaries</b></dt>
+      <dd>
+        Links to nightly RPMS are available from the <a
+        href="http://www.vtk.org/get-software.php"> VTK download
+        page</a>.  A tarball containing all the necessary
+        libraries/modules in order to use VTK from Python is available
+        <a href="http://mayavi.sf.net/dwnld/vtk/">here</a>.  This
+        build uses the latest CVS tree and has been built on the
+        Debian GNU/Linux woody distribution.  More details on the
+        installation etc. are available in the README.txt included at
+        the site.
+      </dd>
+
+      <dt> <b>Binaries for Windows</b> </dt>
+      <dd>
+	Windows binaries are also available at the <a
+	href="http://www.vtk.org/get-software.php"> VTK download
+	page</a>.  Some old windows binaries for VTK-Python should be
+	available from <a
+	href="http://mayavi.sf.net/dwnld/vtk/win32/">here</a>.  This
+	package has all the necessary items for MayaVi compiled in.
+	Instructions on how to install it are available at the
+	site. You might also be interested in checking out <a
+	href="http://www.enthought.com/python/">Enthought's Enhanced
+	Python</a> distribution.  MayaVi should be easy to install
+	from source if you are using this.
+      </dd>
+    </dl>
+
+    <p> The Linux and Win32 binaries pages should be updated
+    reasonably often so do check them out.
+    </p>
+
+    <h3><a name="test_vtk">Testing your VTK installation</a></h3>
+
+    <p>
+      Included along with the MayaVi source is a file called
+      test_vtk.py in the doc directory.  Run this to test your VTK
+      installation like so:
+    </p>
+      <pre>
+      % python test_vtk.py
+      </pre>
+    <p>
+      If this runs without problems then your VTK installation is ok.
+      You should then <a href="#source">install MayaVi from the
+      source</a> and try to run it.  If you have trouble the script
+      will tell you where it failed.  At this point if you are unable
+      to proceed <a href="mailto:mayavi-users@lists.sf.net">email
+      us</a>.  You might also want to check the <a
+      href="../cgi-bin/moin.cgi">MayaVi Wiki.</a>
+    </p>
+
+    <br>
+    <hr>
+
+<!-- Created: Fri May 11 18:28:32 IST 2001 -->
+    <address>
+      Last modified: 25 Aug 2005
+    </address>
+  </body>
+</html>

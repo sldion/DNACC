@@ -1,0 +1,310 @@
+Mon Sep 12 23:13:28 2005 Prabhu Ramachandran <prabhu_r@users.sf.net>
+
+    * MayaVi 1.5 release.
+    
+    * Added new LUT editor contributed by Gerald Knizia and Arnd
+      Baecker.  The LUT editor allows one to edit the colors in RGB or
+      HSV mode.  The editor can also be used standalone.
+
+    * Added support to easily add user defined sources (works just
+      like the user defined modules and filters).  Contributed by Ross
+      Harder.
+
+    * Support for VolumeProMapper contributed by Daniel James White
+      and Heikki Uuksulainen.
+
+    * Added a Vorticity filter contributed by Gareth Clay that
+      computes the vorticity of input vector data.
+
+    * Updated MayaVi and vtkPipeline to work with VTK-CVS and VTK-5.x.
+      Support for VTK versions < 4.0 has been removed.  MayaVi and the
+      pipeline browser will continue to work with VTK-4.x.
+
+    * Added a utility vtk_doc.py script that allows one to search the
+      VTK class docs from a GUI.
+
+    * Fixed severe bug in opening time series data files under Windows.
+
+    * Fixed various other bugs (details in full changelog).
+
+
+Tue Feb 1 20:56:22 2005 Prabhu Ramachandran <prabhu_r@users.sf.net>
+
+    * MayaVi 1.4 release.
+
+    * Support for data files belonging to a time series.  It is now
+      possible to sweep through the time series.  Thanks to Gerard
+      Gorman for an initial patch.
+
+    * Support for user defined modules and filters.  A search path may
+      be specifed in the preferences.  User defined modules and
+      filters are searched for in these directories.  These user
+      defined filters and modules are listed inside a 'User' sub-menu
+      of the Filter and Module menus.  Thanks to Fernando Perez
+      for an initial patch.
+
+    * Fixed critical bugs in the Volume module.
+
+    * Miscellaneous enhancements: allow the user to disable rendering
+      temporarily, user can specify geometry of the MayaVi window.
+      
+    * Several other bug fixes and minor enhancements.
+
+
+Tue Nov 18 14:20:46 2003 Prabhu Ramachandran <prabhu_r@users.sf.net>
+
+    * MayaVi 1.3 release.
+
+    * New Modules:
+      - Volume: Volume visualization using either texture or ray cast
+        mappers.  A useful GUI color transfer function editor is also
+        built-in.
+      - Glyph: Generic glyphs for scalars and vectors.
+      - BandedSurfaceMap: Display banded contours of input data.
+      - Labels: Automatic labeling of data used in other modules.
+      - Text: Display 2D text strings.
+
+    * New Filters:
+      - ExtractGrid: Select part of a grid or subsample it.
+      - StructuredPointsProbe: Probes any input data onto a structured
+        points grid so the data can be used for Volume visualization.
+      - Delaunay3D/Delaunay2D: Triangulate input point data.
+      - UserDefined: Manage any user specified VTK filter.
+      - CutPlane: Cut through any input dataset with a plane.
+
+    * Support for VTK's new XML based files and for EnSight case files
+      (EnSight6 and EnSightGold formats are supported).
+
+    * Improved VectorCutPlane and VelocityVector so you can use a 3D
+      arrow and any of the standard 2D glyphs.
+
+    * The 'imv' module is now part of the mayavi.tools package.  imv
+      is a simple MayaVi based module that provides Matlab like one
+      liners to view 2D surfaces and arrays from the Python
+      interpreter.
+
+    * Support to save rendered scene to vector EPS/PS/PDF or save the
+      text to TeX output using GL2PS.  Requires VTK to be built with
+      GL2PS support (the MayaVi binaries support this).  Also added
+      support for exporting to a Wavefront OBJ file.
+
+    * Support to save the stereo rendering options, the lookup table
+      settings and the lighting as defaults.
+    
+    * Default lookup tables should have more contrast.  28 user
+      contributed lookup tables are included in the sources.  Any
+      lookup table can be reversed.
+
+    * Improved vtkPipeline modules:
+      - ConfigVtkObj: Separated functionality of the ConfigVtkObj
+        class into a separate ConfigVtkObjFrame and a driver class.
+        More options to generate GUI's automatically.
+      - VtkPickler: Can save/load state from a dictionary.
+
+    * Fixes for Python-2.3 and Tk-8.4 related changes.
+
+    * Fixes for the Mac OS X.
+
+    * Many other fixes and improvements.
+
+
+Tue Jun 11 11:55:04 2002 Prabhu Ramachandran <prabhu_r@users.sf.net>
+
+    (*) MayaVi 1.2 release.
+
+    (*) Changed license from GPL/LGPL to BSD.
+
+    (*) Added an integrated data picker.  Thanks to Jose Paulo for
+    initial contributions.
+
+    (*) Added a light control toolkit (contributed by Raymond Maple).
+    This lets you configure 8 different lights using a GUI.
+
+    (*) Added a CellData to PointData filter.
+
+    (*) Fixed bad problem in the lookup table editor that would freeze
+    MayaVi under Win32.
+
+    (*) The scalar/vector range can be set to predetermined values.  A
+    visible range for data can also be specified.  Anything outside
+    this range is made transparent.
+
+    (*) Added --display and --geometry command line options.
+
+    (*) Geomview OOGL export option (thanks to Jeremy Gill).
+
+    (*) Made it easier to animate mayavi from a script.
+
+    (*) Added help menu and use webbrowser to show docs.
+
+    (*) Default dir now set to empty.
+
+    (*) PDF documentation now available.
+
+    (*) Thanks to Maitland Bottoms MayaVi is now distributed as part
+    of Debian GNU/Linux!
+
+    (*) RPM and Debian packages are available in addition to source
+    and binary releases for Win32 and GNU/Linux.
+
+
+
+Sat Nov 17 16:47:51 2001 Prabhu Ramachandran <prabhu_r@users.sf.net>
+
+    (*) MayaVi 1.1.
+     
+    (*) MayaVi can now be installed as a stand-alone binary without the
+    user needing to install Python or VTK.  Made thanks to Gordon
+    McMillan's Installer.
+
+    (*) Can now be used from other Python programs and can be
+    scripted.  Could also be used interactively from the Python
+    interpreter.
+
+    (*) Installs as a Python package using distutils.
+
+    (*) Quite a few useful command line arguments are now supported.
+
+    (*) Added 3D Studio file import, RenderMan RIB/JPEG/PNG
+    export.
+
+    (*) Cleaned up the pickled output of the vtkPickler.  Also cleaned
+    up the vtkMethodParser and the vtkPipeline classes.
+
+    (*) Huge speed up (by a factor of 50 or more) in the "expand all"
+    feature of the pipeline browser, thanks to Dan Blezek
+    <blezek@crd.ge.com>.
+
+    (*) Modified the streamlines so that a DiskSource is used when we
+    have 2D data this also fixes a previous problem with 2D data.
+
+    (*) Add support for using RungeKutta 4th order integration in the
+    streamline module.
+    
+    (*) Intelligently disable useless VTK warning messages that are
+    shown when the pickler or the vtkPipeline code is used by turning
+    these messages off using the GlobalWarningDisplay flag
+    appropriately.
+
+    (*) Automatic hot-key finding for module and filter menus.
+
+    (*) Added options to place the vector glyphs such that they start,
+    end or are centered at a grid point.
+
+    (*) Added filters: PolyDataNormals, WarpVector, WarpScalar,
+    ExtractUnstructuredGrid.  Added module: WarpVectorCutPlane.
+
+    (*) Added utility module, ivtk.py, that makes interactive VTK a
+    pleasure.
+
+    (*) New VtkData Source class that handles user given vtkData.
+    This is very useful when MayaVi is run from other programs and
+    does not use a data file based input.
+
+    (*) Added basic Tensor support, a tensor related filter and module.
+    All of which were contributed by Jose Paulo
+    <moitinho@civil.ist.utl.pt> - many thanks!
+
+    (*) Fixed various bugs.
+
+    (*) Updated the user guide, web pages etc.
+
+
+
+Sun May 13 00:52:07 2001  Prabhu Ramachandran <prabhu_r@users.sourceforge.net>
+
+	* Releasing MayaVi 1.0.
+	
+	* This is the first release of MayaVi.  The news logs are before
+	this entry are for the predecessor of MayaVi, VTK-CFD.  MayaVi is
+	based on ideas from VTK-CFD but has a completely rewritten code
+	base.
+	
+	* Completely rewrote/redesigned the vtk-cfd code and renamed the
+	resulting project MayaVi.  There are so many features that have
+	been added that it is hard to keep track.  This list presents some
+	of the most important new features.
+
+	* Much improved GUI.
+
+	* Support for using multiple visualization modules and multiple
+	data sources simultaneously.
+
+	* Support for saving and reloading of either the entire
+	visualization or a part of it.
+
+	* Improved modules with more features.
+
+	* Uses a new and improved pipeline browser (v1.1) along with a
+	pipeline segment browser.
+
+	* Support for filtering data along with a few simple filters.
+
+	* Support for importing a VRML scene (thanks to Dr. P. A. Rubini
+	for his suggestions).
+
+	* Simple animation of data using autosweep of slider values
+	(thanks again to Dr. P. A. Rubini for his suggestions and sample
+	code.)
+	
+	* The ability to reload _all_ used modules on the fly.  The code
+	is import safe.
+
+	
+	
+Mon Jan 15 15:51:41 2001  Prabhu Ramachandran <prabhu@aero.iitm.ernet.in>
+
+    * Version 0.6 released.  
+
+    * Using a new and improved vtkPipeline browser version 1.0.
+
+    * Removed unnecessary VTK_CFD_PATH settings.
+
+    * Using vtkActors instead of vtkLODActors because the LODActors
+    were behaving funnily.
+
+    * Minor changes to ease use on the Windows(TM) OS.
+
+
+Sat Oct 28 19:24:19 2000  Prabhu Ramachandran <prabhu@aero.iitm.ernet.in>
+
+    * Version 0.5 released.
+
+    * Added support for PLOT3D data files.  Currently only structured
+    PLOT3D files can be handled.  This is due to a limitation in the
+    vtkPLOT3DReader.   
+
+    * Rudimentary support for multi-block data is also included.  My
+    thanks to Dr. M. Fatica for his suggestions.
+
+    * Added support for exporting to a Post Script file.
+
+    * Added a new module for streamlines, streamribbons and streamtubes.
+
+    * Any number of streamlines can be created using point sources.
+
+    * Streamline configuration can be saved and loaded when required.
+
+
+Sun Oct  8 17:05:30 2000  Prabhu Ramachandran <prabhu@aero.iitm.ernet.in>
+
+    * Version 0.4 released.
+
+    * New imporoved vtkPipeline version 0.8 is used.
+
+    * Added a new locator axis that helps locate a point in your data.
+
+    * Added support for BMP, TIFF exports.
+
+    * Forced raise of RenderWindow to enable proper screen exporting.
+
+    * Added a new configure menu for the legend.
+
+    * It is now possible to change the orientation of the legend from
+    horizontal to vertical.
+
+    * Changing any settings will now normally result in real-time
+    updates to the Render window.
+
+
+No news for earlier releases.

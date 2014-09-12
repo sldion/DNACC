@@ -1,0 +1,24 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Picking data</title><meta name="generator" content="DocBook XSL Stylesheets V1.68.1"><link rel="start" href="index.html" title="MayaVi Users Guide"><link rel="up" href="ch03.html" title="Chapter 3. Using MayaVi"><link rel="prev" href="ch03s04.html" title="Visualizing the Data"><link rel="next" href="ch03s06.html" title="Configuring the lights"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Picking data</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s04.html">Prev</a> </td><th width="60%" align="center">Chapter 3. Using MayaVi</th><td width="20%" align="right"> <a accesskey="n" href="ch03s06.html">Next</a></td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="picking"></a>Picking data</h2></div></div></div><p> MayaVi supports data picking.  While visualizing some data
+press the <span><strong class="keycap">p</strong></span> or <span><strong class="keycap">P</strong></span> key to pick the
+data point above the current mouse position.  This will pop up a new
+window where the picked values will be displayed.  The window also has
+a few controls that let you configure the type of picking you wish to
+perform.  Please note that the picker will pick data on the actors
+that you have visualized on screen.  It will attempt to find the
+nearest actor and pick the data on that.  The picked point will be
+highlighted using an axes.  The picker supports picking the following:
+</p><div class="glosslist"><dl><dt>Picking the nearest point</dt><dd><p>This option is the default and lets you pick the
+  nearest point in the data.  You could use this if you have data
+  specified as point data.  Note that when you pick using this option
+  the picked location may not be exactly where you placed the mouse.
+  The location will snap to the nearest available point.  By changing
+  the tolerance presented in the GUI you can control how near the
+  point should be to the exact picked position.</p></dd><dt>Picking the nearest cell</dt><dd><p>This option lets you pick the nearest cell in the
+  data.  You could use this if you have data specified as cell
+  data. By changing the tolerance you can control how closely the
+  picker finds the nearest cell.</p></dd><dt>Picking an arbitrary point</dt><dd><p>This option lets you pick an arbitrary point in
+  space that is not tied to the nearest cell or point.  The motion of
+  this picker is much smoother than the point or cell picker.
+  However, the point that you pick will not be exactly at a point in
+  the actual data.  The results will therefore be interpolated using a
+  probe filter.  </p></dd></dl></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03s04.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch03s06.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Visualizing the Data </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Configuring the lights</td></tr></table></div></body></html>

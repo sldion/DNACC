@@ -166,7 +166,7 @@ def Particles3SCFT(intialDensityA,intialDensityB,Height, Depth, Length, Width, v
 
 	#will return the density if the code converges to a certain tolerance, otherwise will return an array of zeros.
 	if (phidev <= tolerence):
-		return phia
+		return phia, phib, xxs, yys, zzs, flag
 	else:
-		return np.zeros((64,64))
+		return phia,phib, xxs, yys, zzs, flag
 

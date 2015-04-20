@@ -10,44 +10,41 @@ from decimal import *
 
 #parameters = np.loadtxt('try.txt')
 
-def Particles3SCFT(intialDensityA,intialDensityB,Height, Depth, Length, Width, volumeFraction = [0.33,0.33], alpha = 1):
+def Particles3SCFT(intialDensityA,intialDensityB,Height, Depth, Length, Width, volumeFraction = [0.33,0.33], AlphaA = 1,AlphaB = 1):
 
 	np.set_printoptions(precision = 4)
 	t1              = time.clock()
 	volumeFractionA = volumeFraction[0]
-	volumeFractionB = volumeFraction[1] 
+	volumeFractionB = volumeFraction[1]
 	volumeFractionC = 1 - volumeFraction[0] - volumeFraction[1]
-	alphaA          = alpha
-	alphaB          = 1.0
-	alphaC			= 1.0
+	alphaA          = AlphaA
+	alphaB          = AlphaB
+	alphaC	        = 1.0
 	perc            = 0.1          # Percent deviation for trying a big step.
-	smallmix        = 0.01
 	bigmix          = 0.1
-	mixParameter    = smallmix
-	incompresiblity = 100/alphaA        # Defines the stregnth of the global energy penalty 
 
-	kappa 	 = [10 ,100 ,900]
+	kappa 	 = [10, 100,1000]
 	smallmix = [0.01 ,0.005, 0.0005]
 
-	number_of_iterations 			= 100000	# Default 30000
-	tolerence 						= 10**(-4) 	# the tolerance 
-	number_of_lattice_pointsX 		= 64      	# number of lattice points for the j direction
-	number_of_lattice_pointsY       = 64
-	number_of_lattice_pointsZ       = 64
+	number_of_iterations 			= 10000	# Default 30000
+	tolerence 						= 10**(-7) 	# the tolerance
+	number_of_lattice_pointsX 	    = len(intialDensityA)      	# number of lattice points for the j direction
+	number_of_lattice_pointsY       = len(intialDensityA)
+	number_of_lattice_pointsZ       = len(intialDensityA)
 
 	half_number_of_lattice_pointsX 	= number_of_lattice_pointsX/2 # the halfway point in the lattice
 	half_number_of_lattice_pointsY  = number_of_lattice_pointsY/2
 	half_number_of_lattice_pointsZ  = number_of_lattice_pointsY/2
 
-	
+
 	#define box demsions and grid spacing
-	xsize 							= 4.0    								#  
-	ysize                           =4.0
-	zsize							= 4.0
+	xsize 							= 8.0    								#
+	ysize                           = 8.0
+	zsize							= 8.0
 	dx 								= xsize/float(number_of_lattice_pointsX)
 	dy                              = ysize/float(number_of_lattice_pointsY)
 	dz                          	= zsize/float(number_of_lattice_pointsZ)
-	xxs 							= [i*dx - xsize/2.0 for i in range(0,number_of_lattice_pointsX)]
+	xxs 			         		= [i*dx - xsize/2.0 for i in range(0,number_of_lattice_pointsX)]
 	yys                             = [i*dy - ysize/2.0 for i in range(0,number_of_lattice_pointsY)]
 	zzs                         	= [i*dz - zsize/2.0 for i in range(0,number_of_lattice_pointsZ)]
 
@@ -55,7 +52,7 @@ def Particles3SCFT(intialDensityA,intialDensityB,Height, Depth, Length, Width, v
 	flag  = 0
 
 	PotentialAB = np.ones((number_of_lattice_pointsX, number_of_lattice_pointsY, number_of_lattice_pointsZ))
-	
+
 	A1 = Height
 	A2 = Depth
 	length = Length
@@ -73,26 +70,24 @@ def Particles3SCFT(intialDensityA,intialDensityB,Height, Depth, Length, Width, v
 
 
 
-
 	PotentialAB = np.roll(PotentialAB, half_number_of_lattice_pointsX, axis = 0)
 	PotentialAB = np.roll(PotentialAB, half_number_of_lattice_pointsY, axis = 1)
 	PotentialAB = np.roll(PotentialAB, half_number_of_lattice_pointsZ, axis = 2)
 
 	#fft the potential for later use
-	Vkab = np.fft.rfft2(PotentialAB)/((float(number_of_lattice_pointsY)*float(number_of_lattice_pointsX)))
+	Vkab = np.fft.rfftn(PotentialAB)/((float(number_of_lattice_pointsY)*float(number_of_lattice_pointsX)*float(number_of_lattice_pointsZ)))
 
 	#Randomize the density of particle A using a Gaussian distribution
-	std = 0.1;
 	#phia = volumeFractionA + std*np.random.randn(number_of_lattice_pointsY,number_of_lattice_pointsX)
 
 	phia = intialDensityA
 
 	phib = intialDensityB
 
-	phic = 1 -intialDensityA - intialDensityB
-	
+	phic = 1 - intialDensityA - intialDensityB
 
-	
+
+
 	divergence          = []
 	step                = []
 	percentDeviation    = []
@@ -103,25 +98,26 @@ def Particles3SCFT(intialDensityA,intialDensityB,Height, Depth, Length, Width, v
 		for j in xrange(number_of_iterations):
 
 			#SCFT.
-			iphia = np.fft.rfft2(phia);
-			iphib = np.fft.rfft2(phib);
-			iphic = np.fft.rfft2(phic);
+			iphia = np.fft.rfftn(phia);
+			iphib = np.fft.rfftn(phib);
+			iphic = np.fft.rfftn(phic);
 
 			cnva  = iphia*Vkab;
 			cnvb  = iphib*Vkab;
-			cnvc = iphic*Vkab;
+			cnvc  = iphic*Vkab;
 
 
-			icnva = xsize*ysize*zsize*np.fft.irfft2(cnva);
-			icnvb = xsize*ysize*zsize*np.fft.irfft2(cnvb);
-			icnvc = xsize*ysize*zsize*np.fft.irfft2(cnvc)
+			icnva = xsize*ysize*zsize*np.fft.irfftn(cnva);
+			icnvb = xsize*ysize*zsize*np.fft.irfftn(cnvb);
+			icnvc = xsize*ysize*zsize*np.fft.irfftn(cnvc)
 
 
 			wa = icnvb + icnvc - kappa[b]*(1 - phia - phib - phic);
 			wb = icnva + icnvc - kappa[b]*(1 - phia - phib - phic);
-			wc = icnvc + icnva - kappa[b]*(1 - phia - phib - phic)
+			wc = icnvb + icnva - kappa[b]*(1 - phia - phib - phic)
+			
 
-			ewa = np.exp(-alpha*wa)
+			ewa = np.exp(-alphaA*wa)
 			ewb = np.exp(-alphaB*wb)
 			ewc = np.exp(-alphaC*wc)
 			#print phianew
@@ -139,16 +135,16 @@ def Particles3SCFT(intialDensityA,intialDensityB,Height, Depth, Length, Width, v
 			phibtemp = volumeFractionB*xsize*ysize*zsize*ewb/QB;
 			phictemp = volumeFractionC*xsize*ysize*zsize*ewc/QC;
 
-			phiaave = volumeFractionA -dx*dy*dz*np.sum(phiatemp)/(xsize*ysize*zsize)
-			phibave = volumeFractionB -dx*dy*dz*np.sum(phibtemp)/(xsize*ysize*zsize)
-			phicave = volumeFractionC -dx*dy*dz*np.sum(phictemp)/(xsize*ysize*zsize)
+			phiaave = volumeFractionA - dx*dy*dz*np.sum(phiatemp)/(xsize*ysize*zsize)
+			phibave = volumeFractionB - dx*dy*dz*np.sum(phibtemp)/(xsize*ysize*zsize)
+			phicave = volumeFractionC - dx*dy*dz*np.sum(phictemp)/(xsize*ysize*zsize)
 
 			phianew = phiatemp+phiaave
 			phibnew = phibtemp+phibave
 			phicnew = phictemp+phicave
 
 			    #print phia
-			#print(g, devtot[0], perdev)   
+
 			phia = smallmix[b]*phianew + (1 - smallmix[b])*phia
 			phib = smallmix[b]*phibnew + (1 - smallmix[b])*phib
 			phic = smallmix[b]*phicnew + (1 - smallmix[b])*phic
@@ -165,8 +161,8 @@ def Particles3SCFT(intialDensityA,intialDensityB,Height, Depth, Length, Width, v
 
 
 	#will return the density if the code converges to a certain tolerance, otherwise will return an array of zeros.
+	
 	if (phidev <= tolerence):
 		return phia, phib, xxs, yys, zzs, flag
 	else:
-		return phia,phib, xxs, yys, zzs, flag
-
+		return phia, phib, xxs, yys, zzs, flag
